@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { type MouseEvent} from 'react';
-import Auth from '../../utils/auth';
+import Auth from '../utils/auth';
 
 const Header = () => {
   const logout = (event: MouseEvent<HTMLButtonElement>) => {
