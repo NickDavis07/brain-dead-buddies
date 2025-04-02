@@ -1,5 +1,6 @@
 import { SurvivalTip, User } from '../models/index.js';
 import { signToken, AuthenticationError } from '../utils/auth.js'; 
+import ChecklistItem from '../models/SurvivalChecklist.js';
 
 // Define types for the arguments
 interface AddUserArgs {
@@ -45,6 +46,15 @@ interface RemoveCommentArgs {
   commentId: string;
 }
 
+interface AddChecklistItemArgs {
+  text: string;
+}
+
+interface ToggleChecklistItemArgs {
+  id: string;
+  completed: boolean;
+}
+
 const resolvers = {
   Query: {
     users: async () => {
@@ -71,9 +81,13 @@ const resolvers = {
       // If the user is not authenticated, throw an AuthenticationError
       throw new AuthenticationError('Could not authenticate user.');
     },
-    checklist: async () => {
-      // Return an empty array by default
-      return [];
+    checklist: async (_parent: any, _args: any, context: any) => {
+      if (!context.user) {
+        throw new AuthenticationError('You need to be logged in!');
+      }
+
+      // Fetch checklist items for the logged-in user
+      return await ChecklistItem.find({ userId: context.user._id });
     },
   },
   Mutation: {
@@ -177,6 +191,37 @@ const resolvers = {
         );
       }
       throw new AuthenticationError('You need to be logged in!');
+    },
+    addChecklistItem: async (_parent: any, { text }: AddChecklistItemArgs, context: any) => {
+      if (!context.user) {
+        throw new AuthenticationError('You need to be logged in!');
+      }
+
+      // Create a new checklist item for the logged-in user
+      const newItem = await ChecklistItem.create({
+        text,
+        userId: context.user._id,
+      });
+
+      return newItem;
+    },
+    toggleChecklistItem: async (_parent: any, { id, completed }: ToggleChecklistItemArgs, context: any) => {
+      if (!context.user) {
+        throw new AuthenticationError('You need to be logged in!');
+      }
+
+      // Update the completed status of the checklist item
+      const updatedItem = await ChecklistItem.findOneAndUpdate(
+        { _id: id, userId: context.user._id },
+        { completed },
+        { new: true }
+      );
+
+      if (!updatedItem) {
+        throw new Error('Checklist item not found or you are not authorized to update it.');
+      }
+
+      return updatedItem;
     },
   },
 };

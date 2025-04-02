@@ -28,6 +28,7 @@ const typeDefs = `
     id: ID
     text: String
     completed: Boolean
+    userId: String
   }
 
   input SurvivalTipInput {
@@ -64,6 +65,8 @@ const typeDefs = `
     addComment(survivalTipId: ID!, commentText: String!): SurvivalTip
     removeSurvivalTip(survivalTipId: ID!): SurvivalTip
     removeComment(survivalTipId: ID!, commentId: ID!): SurvivalTip
+    addChecklistItem(text: String!): ChecklistItem
+    toggleChecklistItem(id: ID!, completed: Boolean!): ChecklistItem
   }
 `;
 

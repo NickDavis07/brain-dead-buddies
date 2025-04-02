@@ -70,7 +70,7 @@ export const QUERY_CHECKLIST = gql`
   }
 `;
 
-// Mutation to add a new checklist item
+// Mutation to add a new checklist item 
 export const ADD_CHECKLIST_ITEM = gql`
   mutation AddChecklistItem($text: String!) {
     addChecklistItem(text: $text) {
