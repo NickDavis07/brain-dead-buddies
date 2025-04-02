@@ -1,14 +1,15 @@
 import { Schema, model, Document } from 'mongoose';
 
-// Define an interface for the Thought document
+// Define an interface for the SurvivalTip document
 interface IComment extends Document {
   commentText: string;
   createdAt: Date;
 }
 
-interface IThought extends Document {
-  thoughtText: string;
-  thoughtAuthor: string;
+interface ISurvivalTip extends Document {
+  tipText: string;
+  tipAuthor: string;
+  category: string;
   createdAt: Date;
   comments: IComment[];
 }
@@ -31,20 +32,26 @@ const commentSchema = new Schema<IComment>(
   }
 );
 
-// Define the schema for the Thought document
-const thoughtSchema = new Schema<IThought>(
+// Define the schema for the SurvivalTip document
+const survivalTipSchema = new Schema<ISurvivalTip>(
   {
-    thoughtText: {
+    tipText: {
       type: String,
       required: true,
       minlength: 1,
       maxlength: 280,
       trim: true,
     },
-    thoughtAuthor: {
+    tipAuthor: {
       type: String,
       required: true,
       trim: true,
+    },
+    category: {
+      type: String,
+      required: true,
+      enum: ['Shelter', 'Food', 'Weapons', 'Escape Plans', 'Medical', 'Communication', 'Other'],
+      default: 'Other',
     },
     comments: [commentSchema],
   },
@@ -55,6 +62,6 @@ const thoughtSchema = new Schema<IThought>(
   }
 );
 
-const Thought = model<IThought>('Thought', thoughtSchema);
+const SurvivalTip = model<ISurvivalTip>('SurvivalTip', survivalTipSchema);
 
-export default Thought;
+export default SurvivalTip;

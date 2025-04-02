@@ -1,4 +1,4 @@
-import Thought from './Thought.js';
+import SurvivalTip from './SurvivalTip.js';
 import User from './User.js';
 
-export { Thought, User };
+export { SurvivalTip, User };
