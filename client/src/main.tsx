@@ -5,7 +5,7 @@ import App from './App.jsx';
 import Home from './pages/Home';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
-import Checklist from './pages/Signup.js';
+import Profile from './pages/Profile';
 import Blog from './pages/Blog';
 import ErrorPage from './pages/Error';
 
@@ -22,8 +22,11 @@ const router = createBrowserRouter([
         path: '/blog',
         element: <Blog />
       }, {
-        path: '/checklist',
-        element: <Checklist />
+        path: '/profiles/:username',
+        element: <Profile />
+      }, {
+        path: '/me',
+        element: <Profile />
       }, {
         path: '/login',
         element: <Login />
