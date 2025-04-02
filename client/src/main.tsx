@@ -8,6 +8,7 @@ import Login from './pages/Login';
 import Profile from './pages/Profile';
 import Blog from './pages/Blog';
 import ErrorPage from './pages/Error';
+import SurvivalChecklist from './pages/SurvivalChecklist';
 
 const router = createBrowserRouter([
   {
@@ -33,6 +34,9 @@ const router = createBrowserRouter([
       }, {
         path: '/signup',
         element: <Signup />
+      }, {
+        path: '/checklist',
+        element: <SurvivalChecklist />
       },
     ]
   },
