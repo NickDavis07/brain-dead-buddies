@@ -58,3 +58,36 @@ export const QUERY_ME = gql`
     }
   }
 `;
+
+// Query to fetch the user's checklist
+export const QUERY_CHECKLIST = gql`
+  query GetChecklist {
+    checklist {
+      id
+      text
+      completed
+    }
+  }
+`;
+
+// Mutation to add a new checklist item
+export const ADD_CHECKLIST_ITEM = gql`
+  mutation AddChecklistItem($text: String!) {
+    addChecklistItem(text: $text) {
+      id
+      text
+      completed
+    }
+  }
+`;
+
+// Mutation to toggle the completion status of a checklist item
+export const TOGGLE_CHECKLIST_ITEM = gql`
+  mutation ToggleChecklistItem($id: ID!, $completed: Boolean!) {
+    toggleChecklistItem(id: $id, completed: $completed) {
+      id
+      text
+      completed
+    }
+  }
+`;
