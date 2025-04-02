@@ -77,7 +77,9 @@ const SurvivalChecklist = () => {
   return (
     <div className="container mx-auto p-4">
       {/* Page title */}
-      <h1 className="text-2xl font-bold text-center mb-6">Survival Checklist</h1>
+      <h1 className="text-2xl font-bold text-center mb-6 text-white" style={{ textShadow: '2px 2px 0px black, -2px -2px 0px black, 2px -2px 0px black, -2px 2px 0px black' }}>
+        Survival Checklist
+      </h1>
 
       {/* Input field and button to add a new checklist item */}
       <div className="mb-4">
