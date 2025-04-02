@@ -24,6 +24,12 @@ const typeDefs = `
     createdAt: String
   }
 
+  type ChecklistItem {
+    id: ID
+    text: String
+    completed: Boolean
+  }
+
   input SurvivalTipInput {
     tipText: String!
     tipAuthor: String!
@@ -48,6 +54,7 @@ const typeDefs = `
     survivalTip(survivalTipId: ID!): SurvivalTip
     survivalTipsByCategory(category: String!): [SurvivalTip]
     me: User
+    checklist: [ChecklistItem]
   }
 
   type Mutation {
