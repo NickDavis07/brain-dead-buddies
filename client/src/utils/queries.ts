@@ -91,3 +91,14 @@ export const TOGGLE_CHECKLIST_ITEM = gql`
     }
   }
 `;
+
+// Mutation to delete a checklist item
+export const DELETE_CHECKLIST_ITEM = gql`
+  mutation DeleteChecklistItem($id: ID!) {
+    deleteChecklistItem(id: $id) {
+      id
+      text
+      completed
+    }
+  }
+`;
