@@ -71,6 +71,10 @@ const resolvers = {
       // If the user is not authenticated, throw an AuthenticationError
       throw new AuthenticationError('Could not authenticate user.');
     },
+    checklist: async () => {
+      // Return an empty array by default
+      return [];
+    },
   },
   Mutation: {
     addUser: async (_parent: any, { input }: AddUserArgs) => {
