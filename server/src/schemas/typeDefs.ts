@@ -4,13 +4,16 @@ const typeDefs = `
     username: String
     email: String
     password: String
-    thoughts: [Thought]!
+    survivalTips: [SurvivalTip]!
+    dateJoined: String
+    role: String
   }
 
-  type Thought {
+  type SurvivalTip {
     _id: ID
-    thoughtText: String
-    thoughtAuthor: String
+    tipText: String
+    tipAuthor: String
+    category: String
     createdAt: String
     comments: [Comment]!
   }
@@ -21,9 +24,10 @@ const typeDefs = `
     createdAt: String
   }
 
-  input ThoughtInput {
-    thoughtText: String!
-    thoughtAuthor: String!
+  input SurvivalTipInput {
+    tipText: String!
+    tipAuthor: String!
+    category: String!
   }
 
   input UserInput {
@@ -40,18 +44,19 @@ const typeDefs = `
   type Query {
     users: [User]
     user(username: String!): User
-    thoughts: [Thought]!
-    thought(thoughtId: ID!): Thought
+    survivalTips: [SurvivalTip]!
+    survivalTip(survivalTipId: ID!): SurvivalTip
+    survivalTipsByCategory(category: String!): [SurvivalTip]
     me: User
   }
 
   type Mutation {
     addUser(input: UserInput!): Auth
     login(email: String!, password: String!): Auth
-    addThought(input: ThoughtInput!): Thought
-    addComment(thoughtId: ID!, commentText: String!): Thought
-    removeThought(thoughtId: ID!): Thought
-    removeComment(thoughtId: ID!, commentId: ID!): Thought
+    addSurvivalTip(input: SurvivalTipInput!): SurvivalTip
+    addComment(survivalTipId: ID!, commentText: String!): SurvivalTip
+    removeSurvivalTip(survivalTipId: ID!): SurvivalTip
+    removeComment(survivalTipId: ID!, commentId: ID!): SurvivalTip
   }
 `;
 
