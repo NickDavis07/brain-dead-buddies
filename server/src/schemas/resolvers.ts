@@ -1,5 +1,6 @@
 import { SurvivalTip, User } from '../models/index.js';
 import { signToken, AuthenticationError } from '../utils/auth.js'; 
+import { v4 as uuidv4 } from 'uuid'; // Use UUID for generating unique IDs
 
 // Define types for the arguments
 interface AddUserArgs {
@@ -45,6 +46,12 @@ interface RemoveCommentArgs {
   commentId: string;
 }
 
+interface AddChecklistItemArgs {
+  text: string;
+}
+
+let checklistItems: Array<{ id: string; text: string; completed: boolean }> = [];
+
 const resolvers = {
   Query: {
     users: async () => {
@@ -72,8 +79,7 @@ const resolvers = {
       throw new AuthenticationError('Could not authenticate user.');
     },
     checklist: async () => {
-      // Return an empty array by default
-      return [];
+      return checklistItems;
     },
   },
   Mutation: {
@@ -177,6 +183,20 @@ const resolvers = {
         );
       }
       throw new AuthenticationError('You need to be logged in!');
+    },
+    addChecklistItem: async (_parent: any, { text }: AddChecklistItemArgs, context: any) => {
+      if (!context.user) {
+        throw new AuthenticationError('You need to be logged in!');
+      }
+
+      const newItem = {
+        id: uuidv4(),
+        text,
+        completed: false,
+      };
+
+      checklistItems.push(newItem); // Add the new item to the in-memory array
+      return newItem;
     },
   },
 };
