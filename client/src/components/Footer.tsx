@@ -31,9 +31,9 @@ const Footer: React.FC = () => {
             aria-label="heart"
             aria-hidden="false"
           >
-            ❤️
+            🧠
           </span>{' '}
-          by the Tech Thoughts team.
+          by group 8.
         </h4>
       </div>
     </footer>

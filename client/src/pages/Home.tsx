@@ -6,8 +6,8 @@ const Home = () => {
           className="col-12 col-md-10 mb-3 p-3"
           style={{ border: '1px dotted #1a1a1a' }}
         >
-          <h2>Welcome to Brain Dead Buddies!</h2>
-          <p>Brain Dead Buddies is a zombie survival checklist and tips forum to help you outsmart the brain-dead before they get your brains.</p>
+          <h2>placeholder text</h2>
+          <p>placeholder text</p>
         </div>
       </div>
     </main>
