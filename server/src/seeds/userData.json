@@ -1,17 +1,27 @@
 [
     {
-        "username": "JollyGuru",
-        "email": "jolly@guru.com",
+        "username": "ZombieSlayer42",
+        "email": "slayer@zombie.com",
         "password": "password"
     },
     {
-        "username": "SunnyScribe",
-        "email": "sunny@scribe.com",
+        "username": "ApocalypseAce",
+        "email": "ace@apocalypse.com",
         "password": "password"
     },
     {
-        "username": "RadiantComet",
-        "email": "radiant@comet.com",
+        "username": "BunkerBandit",
+        "email": "bandit@bunker.com",
+        "password": "password"
+    },
+    {
+        "username": "UndeadScholar",
+        "email": "scholar@undead.com",
+        "password": "password"
+    },
+    {
+        "username": "NightmareNomad",
+        "email": "nomad@nightmare.com",
         "password": "password"
     }
 ]

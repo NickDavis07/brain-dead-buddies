@@ -6,7 +6,9 @@ interface IUser extends Document {
   username: string;
   email: string;
   password: string;
-  thoughts: Schema.Types.ObjectId[];
+  survivalTips: Schema.Types.ObjectId[];
+  dateJoined: Date;
+  role: string;
   isCorrectPassword(password: string): Promise<boolean>;
 }
 
@@ -30,12 +32,21 @@ const userSchema = new Schema<IUser>(
       required: true,
       minlength: 5,
     },
-    thoughts: [
+    survivalTips: [
       {
         type: Schema.Types.ObjectId,
-        ref: 'Thought',
+        ref: 'SurvivalTip',
       },
     ],
+    dateJoined: {
+      type: Date,
+      default: Date.now,
+    },
+    role: {
+      type: String,
+      enum: ['user', 'moderator', 'admin'],
+      default: 'user',
+    },
   },
   {
     timestamps: true,

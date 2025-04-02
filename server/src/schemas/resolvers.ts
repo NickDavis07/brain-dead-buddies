@@ -1,4 +1,4 @@
-import { Thought, User } from '../models/index.js';
+import { SurvivalTip, User } from '../models/index.js';
 import { signToken, AuthenticationError } from '../utils/auth.js'; 
 
 // Define types for the arguments
@@ -19,47 +19,54 @@ interface UserArgs {
   username: string;
 }
 
-interface ThoughtArgs {
-  thoughtId: string;
+interface SurvivalTipArgs {
+  survivalTipId: string;
 }
 
-interface AddThoughtArgs {
+interface CategoryArgs {
+  category: string;
+}
+
+interface AddSurvivalTipArgs {
   input:{
-    thoughtText: string;
-    thoughtAuthor: string;
+    tipText: string;
+    tipAuthor: string;
+    category: string;
   }
 }
 
 interface AddCommentArgs {
-  thoughtId: string;
+  survivalTipId: string;
   commentText: string;
 }
 
 interface RemoveCommentArgs {
-  thoughtId: string;
+  survivalTipId: string;
   commentId: string;
 }
 
 const resolvers = {
   Query: {
     users: async () => {
-      return User.find().populate('thoughts');
+      return User.find().populate('survivalTip');
     },
     user: async (_parent: any, { username }: UserArgs) => {
-      return User.findOne({ username }).populate('thoughts');
+      return User.findOne({ username }).populate('survivalTip');
     },
-    thoughts: async () => {
-      return await Thought.find().sort({ createdAt: -1 });
+    survivalTips: async () => {
+      return await SurvivalTip.find().sort({ createdAt: -1 });
     },
-    thought: async (_parent: any, { thoughtId }: ThoughtArgs) => {
-      return await Thought.findOne({ _id: thoughtId });
+    survivalTip: async (_parent: any, { survivalTipId }: SurvivalTipArgs) => {
+      return await SurvivalTip.findOne({ _id: survivalTipId });
+    },
+    survivalTipsByCategory: async (_parent: any, { category }: CategoryArgs) => {
+      return await SurvivalTip.find({ category }).sort({ createdAt: -1 });
     },
     // Query to get the authenticated user's information
-    // The 'me' query relies on the context to check if the user is authenticated
     me: async (_parent: any, _args: any, context: any) => {
-      // If the user is authenticated, find and return the user's information along with their thoughts
+      // If the user is authenticated, find and return the user's information along with their survivalTip
       if (context.user) {
-        return User.findOne({ _id: context.user._id }).populate('thoughts');
+        return User.findOne({ _id: context.user._id }).populate('survivalTip');
       }
       // If the user is not authenticated, throw an AuthenticationError
       throw new AuthenticationError('Could not authenticate user.');
@@ -100,24 +107,23 @@ const resolvers = {
       // Return the token and the user
       return { token, user };
     },
-    addThought: async (_parent: any, { input }: AddThoughtArgs, context: any) => {
+    addSurvivalTip: async (_parent: any, { input }: AddSurvivalTipArgs, context: any) => {
       if (context.user) {
-        const thought = await Thought.create({ ...input });
+        const survivalTip = await SurvivalTip.create({ ...input });
 
         await User.findOneAndUpdate(
           { _id: context.user._id },
-          { $addToSet: { thoughts: thought._id } }
+          { $addToSet: { survivalTips: survivalTip._id } }
         );
 
-        return thought;
+        return survivalTip;
       }
-      throw AuthenticationError;
-      ('You need to be logged in!');
+      throw new AuthenticationError('You need to be logged in!');
     },
-    addComment: async (_parent: any, { thoughtId, commentText }: AddCommentArgs, context: any) => {
+    addComment: async (_parent: any, { survivalTipId, commentText }: AddCommentArgs, context: any) => {
       if (context.user) {
-        return Thought.findOneAndUpdate(
-          { _id: thoughtId },
+        return SurvivalTip.findOneAndUpdate(
+          { _id: survivalTipId },
           {
             $addToSet: {
               comments: { commentText, commentAuthor: context.user.username },
@@ -129,32 +135,32 @@ const resolvers = {
           }
         );
       }
-      throw AuthenticationError;
+      throw new AuthenticationError('You need to be logged in!');
     },
-    removeThought: async (_parent: any, { thoughtId }: ThoughtArgs, context: any) => {
+    removeSurvivalTip: async (_parent: any, { survivalTipId }: SurvivalTipArgs, context: any) => {
       if (context.user) {
-        const thought = await Thought.findOneAndDelete({
-          _id: thoughtId,
-          thoughtAuthor: context.user.username,
+        const survivalTip = await SurvivalTip.findOneAndDelete({
+          _id: survivalTipId,
+          tipAuthor: context.user.username,
         });
 
-        if(!thought){
-          throw AuthenticationError;
+        if(!survivalTip){
+          throw new AuthenticationError('Tip not found or you are not authorized to delete it.');
         }
 
         await User.findOneAndUpdate(
           { _id: context.user._id },
-          { $pull: { thoughts: thought._id } }
+          { $pull: { survivalTips: survivalTip._id } }
         );
 
-        return thought;
+        return survivalTip;
       }
-      throw AuthenticationError;
+      throw new AuthenticationError('You need to be logged in!');
     },
-    removeComment: async (_parent: any, { thoughtId, commentId }: RemoveCommentArgs, context: any) => {
+    removeComment: async (_parent: any, { survivalTipId, commentId }: RemoveCommentArgs, context: any) => {
       if (context.user) {
-        return Thought.findOneAndUpdate(
-          { _id: thoughtId },
+        return SurvivalTip.findOneAndUpdate(
+          { _id: survivalTipId },
           {
             $pull: {
               comments: {
@@ -166,7 +172,7 @@ const resolvers = {
           { new: true }
         );
       }
-      throw AuthenticationError;
+      throw new AuthenticationError('You need to be logged in!');
     },
   },
 };
