@@ -64,6 +64,7 @@ const typeDefs = `
     addComment(survivalTipId: ID!, commentText: String!): SurvivalTip
     removeSurvivalTip(survivalTipId: ID!): SurvivalTip
     removeComment(survivalTipId: ID!, commentId: ID!): SurvivalTip
+    addChecklistItem(text: String!): ChecklistItem
   }
 `;
 
