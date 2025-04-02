@@ -3,6 +3,8 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
 import App from './App.jsx';
 import Home from './pages/Home';
+import Signup from './pages/Signup';
+import Login from './pages/Login';
 import Checklist from './pages/Signup.js';
 import Blog from './pages/Blog';
 import ErrorPage from './pages/Error';
@@ -22,6 +24,12 @@ const router = createBrowserRouter([
       }, {
         path: '/checklist',
         element: <Checklist />
+      }, {
+        path: '/login',
+        element: <Login />
+      }, {
+        path: '/signup',
+        element: <Signup />
       },
     ]
   },
