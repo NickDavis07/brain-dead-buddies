@@ -67,6 +67,7 @@ const typeDefs = `
     removeComment(survivalTipId: ID!, commentId: ID!): SurvivalTip
     addChecklistItem(text: String!): ChecklistItem
     toggleChecklistItem(id: ID!, completed: Boolean!): ChecklistItem
+    deleteChecklistItem(id: ID!): ChecklistItem
   }
 `;
 

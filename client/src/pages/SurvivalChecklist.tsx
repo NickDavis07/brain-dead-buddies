@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useQuery, useMutation } from '@apollo/client';
 import { Navigate } from 'react-router-dom';
 import Auth from '../utils/auth';
-import { QUERY_CHECKLIST, ADD_CHECKLIST_ITEM, TOGGLE_CHECKLIST_ITEM } from '../utils/queries';
+import { QUERY_CHECKLIST, ADD_CHECKLIST_ITEM, TOGGLE_CHECKLIST_ITEM, DELETE_CHECKLIST_ITEM } from '../utils/queries';
 
 // Define the structure of a checklist item
 interface ChecklistItem {
@@ -23,6 +23,9 @@ const SurvivalChecklist = () => {
 
   // Mutation to toggle the completion status of a checklist item
   const [toggleChecklistItem] = useMutation(TOGGLE_CHECKLIST_ITEM);
+
+  // Mutation to delete a checklist item
+  const [deleteChecklistItem] = useMutation(DELETE_CHECKLIST_ITEM);
 
   // Extract the checklist data or default to an empty array
   const checklist = data?.checklist || [];
@@ -52,6 +55,18 @@ const SurvivalChecklist = () => {
     try {
       await toggleChecklistItem({
         variables: { id, completed: !completed }, // Toggle the completed status
+      });
+      refetch(); // Refresh the checklist data
+    } catch (err) {
+      console.error(err); // Log any errors
+    }
+  };
+
+  // Handle deleting a checklist item
+  const handleDeleteItem = async (id: string) => {
+    try {
+      await deleteChecklistItem({
+        variables: { id }, // Pass the item ID as a variable
       });
       refetch(); // Refresh the checklist data
     } catch (err) {
@@ -101,18 +116,26 @@ const SurvivalChecklist = () => {
               >
                 {item.text}
               </span>
-
-              {/* Button to toggle completion status */}
-              <button
-                onClick={() => handleToggleComplete(item.id, item.completed)} // Trigger toggle handler
-                className={`px-4 py-2 rounded ${
-                  item.completed
-                    ? 'bg-red-500 text-white hover:bg-red-600' // Styling for completed items
-                    : 'bg-blue-500 text-white hover:bg-blue-600' // Styling for incomplete items
-                }`}
-              >
-                {item.completed ? 'Undo' : 'Complete'} {/* Button label */}
-              </button>
+              <div className="flex space-x-2">
+                {/* Button to toggle completion status */}
+                <button
+                  onClick={() => handleToggleComplete(item.id, item.completed)} // Trigger toggle handler
+                  className={`px-4 py-2 rounded ${
+                    item.completed
+                      ? 'bg-red-500 text-white hover:bg-red-600' // Styling for completed items
+                      : 'bg-blue-500 text-white hover:bg-blue-600' // Styling for incomplete items
+                  }`}
+                >
+                  {item.completed ? 'Undo' : 'Complete'} {/* Button label */}
+                </button>
+                {/* Button to delete the item */}
+                <button
+                  onClick={() => handleDeleteItem(item.id)} // Trigger delete handler
+                  className="px-4 py-2 rounded bg-gray-500 text-white hover:bg-gray-600"
+                >
+                  Delete
+                </button>
+              </div>
             </li>
           ))}
         </ul>

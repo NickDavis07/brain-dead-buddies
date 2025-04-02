@@ -223,6 +223,23 @@ const resolvers = {
 
       return updatedItem;
     },
+    deleteChecklistItem: async (_parent: any, { id }: { id: string }, context: any) => {
+      if (!context.user) {
+        throw new AuthenticationError('You need to be logged in!');
+      }
+
+      // Find and delete the checklist item
+      const deletedItem = await ChecklistItem.findOneAndDelete({
+        _id: id,
+        userId: context.user._id, // Ensure the item belongs to the logged-in user
+      });
+
+      if (!deletedItem) {
+        throw new Error('Checklist item not found or you are not authorized to delete it.');
+      }
+
+      return deletedItem;
+    },
   },
 };
 
