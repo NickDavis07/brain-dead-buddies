@@ -13,7 +13,7 @@ const Footer: React.FC = () => {
   }
 
   return (
-    <footer className="w-100 mt-auto bg-secondary p-4">
+    <footer className="w-100 mt-auto bg-black p-4">
       <div className="container text-center mb-5">
         {location.pathname !== '/' && (
           <button
@@ -23,7 +23,7 @@ const Footer: React.FC = () => {
             &larr; Go Back
           </button>
         )}
-        <h4>
+        <h4 style={{ color: 'lightgrey' }}>
           Made with{' '}
           <span
             className="emoji"

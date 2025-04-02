@@ -10,7 +10,7 @@ const Header = () => {
   return (
     <header className="bg-dark text-light mb-4 py-3 flex-row align-center">
       <div className="container flex-row justify-space-between-lg justify-center align-center">
-        <div className="d-flex align-items-center" style={{ position: "absolute", left: "10px" }}>
+        <div className="d-flex align-items-center" style={{ position: "absolute", left: "20px" }}>
           <img src={logo} alt="Brain Dead Buddies Logo" className="logo" style={{ width: "100px", height: "100px" }} />
         </div>
         <div className="d-flex flex-column align-items-center">
