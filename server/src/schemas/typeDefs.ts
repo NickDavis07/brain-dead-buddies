@@ -18,6 +18,14 @@ const typeDefs = `
     comments: [Comment]!
   }
 
+  type TipOfTheDay {
+    _id: ID
+    text: String
+    author: String
+    category: String
+    date: String
+  }
+
   type Comment {
     _id: ID
     commentText: String
@@ -56,6 +64,7 @@ const typeDefs = `
     survivalTipsByCategory(category: String!): [SurvivalTip]
     me: User
     checklist: [ChecklistItem]
+    tipOfTheDay: TipOfTheDay
   }
 
   type Mutation {
