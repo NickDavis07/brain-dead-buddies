@@ -1,4 +1,4 @@
-import { SurvivalTip, User } from '../models/index.js';
+import { SurvivalTip, User, TipOfTheDay } from '../models/index.js';
 import { signToken, AuthenticationError } from '../utils/auth.js'; 
 import ChecklistItem from '../models/SurvivalChecklist.js';
 
@@ -89,6 +89,35 @@ const resolvers = {
       // Fetch checklist items for the logged-in user
       return await ChecklistItem.find({ userId: context.user._id });
     },
+    tipOfTheDay: async () => {
+      // Get today's date at 00:00:00
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      
+      // Check if we already have a tip for today
+      let todaysTip = await TipOfTheDay.findOne({
+        date: { $gte: today, $lt: new Date(today.getTime() + 24 * 60 * 60 * 1000) }
+      });
+      
+      // If no tip exists for today, create one
+      if (!todaysTip) {
+        // Get a random tip from SurvivalTips collection
+        const tipsCount = await SurvivalTip.countDocuments();
+        const randomIndex = Math.floor(Math.random() * tipsCount);
+        const randomTip = await SurvivalTip.findOne().skip(randomIndex);
+        
+        if (randomTip) {
+          todaysTip = await TipOfTheDay.create({
+            text: randomTip.tipText,
+            author: randomTip.tipAuthor,
+            category: randomTip.category,
+            date: today
+          });
+        }
+      }
+      
+      return todaysTip;
+    }
   },
   Mutation: {
     addUser: async (_parent: any, { input }: AddUserArgs) => {

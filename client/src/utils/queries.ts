@@ -102,3 +102,16 @@ export const DELETE_CHECKLIST_ITEM = gql`
     }
   }
 `;
+
+
+export const TIP_OF_THE_DAY = gql`
+  query GetTipOfTheDay {
+    tipOfTheDay {
+      _id
+      text
+      author
+      category
+      date
+    }
+  }
+`;
