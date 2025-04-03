@@ -6,21 +6,12 @@ const Home = () => {
       <div className="flex-row justify-center">
         {/* Add the Tip of the Day component at the top */}
         <TipOfTheDay />
-        
-        <div
-          className="col-12 col-md-10 mb-3 p-3"
-          style={{ border: '1px dotted #1a1a1a' }}
-        >
-          <h2>Welcome to Brain Dead Buddies</h2>
-          <p>Your ultimate resource for surviving the zombie apocalypse</p>
-        </div>
       </div>
     </main>
   );
 };
 
 export default Home;
-
 
 // import { useQuery } from '@apollo/client';
 
