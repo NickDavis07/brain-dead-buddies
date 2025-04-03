@@ -88,12 +88,12 @@ const SurvivalChecklist = () => {
           value={newItemText}
           onChange={(e) => setNewItemText(e.target.value)}
           placeholder="Add a new item"
-          className="border p-2 mr-2"
+          className="bg-gray-500 text-white border border-gray-600 p-2 mr-2 rounded"
         />
         <select
           value={newItemPriority}
           onChange={(e) => setNewItemPriority(e.target.value)}
-          className="border p-2 mr-2"
+          className="bg-gray-500 text-white border border-gray-600 p-2 mr-2 rounded"
         >
           <option value="Low">Low</option>
           <option value="Medium">Medium</option>
@@ -116,13 +116,13 @@ const SurvivalChecklist = () => {
             <li
               key={item.id}
               className={`flex items-center justify-between p-4 border rounded-lg ${
-                item.completed ? 'bg-green-100 border-green-400' : 'bg-white border-gray-300'
+                item.completed ? 'bg-green-100 border-green-400' : 'bg-gray-500 border-gray-600'
               }`}
             >
               {/* Checklist item text with conditional styling */}
               <span
                 className={`text-lg ${
-                  item.completed ? 'line-through text-gray-500' : 'text-gray-800'
+                  item.completed ? 'line-through text-gray-300' : 'text-white'
                 }`}
               >
                 {item.text}
@@ -142,7 +142,7 @@ const SurvivalChecklist = () => {
                 {/* Delete button */}
                 <button
                   onClick={() => handleDeleteItem(item.id)}
-                  className="px-4 py-2 rounded bg-gray-500 text-white hover:bg-gray-600"
+                  className="px-4 py-2 rounded bg-gray-700 text-white hover:bg-gray-800"
                 >
                   Delete
                 </button>
