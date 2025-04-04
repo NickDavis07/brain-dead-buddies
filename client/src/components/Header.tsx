@@ -30,6 +30,9 @@ const Header = () => {
               <Link className="btn btn-lg btn-secondary m-2" to="/checklist">
                 Survival Checklist
               </Link>
+              <Link className="btn btn-lg btn-secondary m-2" to="/blog">
+                Blog
+              </Link>
               <button className="btn btn-lg btn-light m-2" onClick={logout}>
                 Logout
               </button>

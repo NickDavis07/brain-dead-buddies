@@ -9,6 +9,7 @@ import Profile from './pages/Profile';
 import Blog from './pages/Blog';
 import ErrorPage from './pages/Error';
 import SurvivalChecklist from './pages/SurvivalChecklist';
+import SingleThought from './pages/SingleThought';
 
 const router = createBrowserRouter([
   {
@@ -37,7 +38,10 @@ const router = createBrowserRouter([
       }, {
         path: '/checklist',
         element: <SurvivalChecklist />
-      },
+      }, {
+        path: '/thoughts/:thoughtId',
+        element: <SingleThought />
+      }
     ]
   },
 ]);
