@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 import Auth from "../utils/auth";
 import logo from "../assets/Zombie_logo.png"; // Adjust path if necessary
@@ -28,14 +27,14 @@ const Header = () => {
         <div>
           {Auth.loggedIn() ? (
             <>
-              <Link className="btn btn-lg btn-secondary m-2" to="/me">
-                <strong>{Auth.getProfile().data.username}'s profile</strong>
-              </Link>
               <Link className="btn btn-lg btn-secondary m-2" to="/checklist">
                 <strong>Survival Checklist</strong>
               </Link>
               <Link className="btn btn-lg btn-secondary m-2" to="/blog">
                 <strong>Blog</strong>
+              </Link>
+              <Link className="btn btn-lg btn-secondary m-2" to="/me">
+                <strong>{Auth.getProfile().data.username}'s profile</strong>
               </Link>
               <button className="btn btn-lg btn-light m-2" onClick={logout}>
                 <strong>Logout</strong>
@@ -47,7 +46,7 @@ const Header = () => {
                 <strong>Login</strong>
               </Link>
               <Link className="btn btn-lg btn-light m-2" to="/signup">
-              <strong>Sign Up</strong>
+                <strong>Sign Up</strong>
               </Link>
             </>
           )}
@@ -55,6 +54,6 @@ const Header = () => {
       </div>
     </header>
   );
-}
+};
 
 export default Header;
