@@ -40,7 +40,8 @@ const ChecklistItem: React.FC<ChecklistItemProps> = ({ item, onToggleComplete, o
             High
           </option>
         </select>
-
+        {/* Spacer for better alignment on small screens */}
+        <div className="h-1 sm:h-0"></div>
         {/* Complete/Undo Button */}
         <button
           onClick={() => onToggleComplete(item.id, item.completed)}
@@ -50,7 +51,8 @@ const ChecklistItem: React.FC<ChecklistItemProps> = ({ item, onToggleComplete, o
         >
           {item.completed ? 'Undo' : 'Complete'}
         </button>
-
+        {/* Spacer for consistent spacing */}
+        <div className="h-1 sm:h-0 sm:h-0"></div>
         {/* Delete Button */}
         <button
           onClick={() => onDelete(item.id)}

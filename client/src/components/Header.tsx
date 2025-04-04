@@ -29,25 +29,25 @@ const Header = () => {
           {Auth.loggedIn() ? (
             <>
               <Link className="btn btn-lg btn-secondary m-2" to="/me">
-                {Auth.getProfile().data.username}'s profile
+                <strong>{Auth.getProfile().data.username}'s profile</strong>
               </Link>
               <Link className="btn btn-lg btn-secondary m-2" to="/checklist">
-                Survival Checklist
+                <strong>Survival Checklist</strong>
               </Link>
               <Link className="btn btn-lg btn-secondary m-2" to="/blog">
-                Blog
+                <strong>Blog</strong>
               </Link>
               <button className="btn btn-lg btn-light m-2" onClick={logout}>
-                Logout
+                <strong>Logout</strong>
               </button>
             </>
           ) : (
             <>
               <Link className="btn btn-lg btn-secondary m-2" to="/login">
-                Login
+                <strong>Login</strong>
               </Link>
               <Link className="btn btn-lg btn-light m-2" to="/signup">
-                Signup
+              <strong>Sign Up</strong>
               </Link>
             </>
           )}
