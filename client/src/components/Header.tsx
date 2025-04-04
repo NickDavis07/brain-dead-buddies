@@ -2,6 +2,7 @@
 import { Link } from "react-router-dom";
 import Auth from "../utils/auth";
 import logo from "../assets/Zombie_logo.png"; // Adjust path if necessary
+import logo2 from "../assets/scared_brain.png"; // Optional: if you want to use a different logo for the right side
 
 const Header = () => {
   const logout = () => {
@@ -10,8 +11,11 @@ const Header = () => {
   return (
     <header className="bg-dark text-light mb-4 py-3 flex-row align-center">
       <div className="container flex-row justify-space-between-lg justify-center align-center">
-        <div className="d-flex align-items-center" style={{ position: "absolute", left: "20px" }}>
+        <div className="d-flex align-items-center" style={{ position: "absolute", left: "30px" }}>
           <img src={logo} alt="Brain Dead Buddies Logo" className="logo" style={{ width: "100px", height: "100px" }} />
+        </div>
+        <div className="d-flex align-items-center" style={{ position: "absolute", right: "30px" }}>
+          <img src={logo2} alt="scared Brain" className="logo" style={{ width: "100px", height: "100px" }} />
         </div>
         <div className="d-flex flex-column align-items-center">
           <Link className="text-light" to="/">
