@@ -5,6 +5,7 @@ const typeDefs = `
     email: String
     password: String
     survivalTips: [SurvivalTip]!
+    blogPosts: [BlogPost]!
     dateJoined: String
     role: String
   }
@@ -16,6 +17,22 @@ const typeDefs = `
     category: String
     createdAt: String
     comments: [Comment]!
+  }
+
+  type BlogPost {
+    _id: ID!
+    title: String!
+    content: String!
+    categories: [Category]
+    user: User!
+    createdAt: String!
+    updatedAt: String
+    comments: [Comment]!
+  }
+
+  type Category {
+    _id: ID!
+    name: String!
   }
 
   type TipOfTheDay {
@@ -30,6 +47,7 @@ const typeDefs = `
     _id: ID
     commentText: String
     createdAt: String
+    author: User
   }
 
   type ChecklistItem {
@@ -44,6 +62,12 @@ const typeDefs = `
     tipText: String!
     tipAuthor: String!
     category: String!
+  }
+
+  input BlogPostInput {
+    title: String!
+    content: String!
+    categoryIds: [ID]
   }
 
   input UserInput {
@@ -63,6 +87,9 @@ const typeDefs = `
     survivalTips: [SurvivalTip]!
     survivalTip(survivalTipId: ID!): SurvivalTip
     survivalTipsByCategory(category: String!): [SurvivalTip]
+    blogPosts: [BlogPost]!
+    blogPost(blogPostId: ID!): BlogPost
+    getAllPosts: [BlogPost]!
     me: User
     checklist: [ChecklistItem]
     tipOfTheDay: TipOfTheDay
@@ -73,8 +100,13 @@ const typeDefs = `
     login(email: String!, password: String!): Auth
     addSurvivalTip(input: SurvivalTipInput!): SurvivalTip
     addComment(survivalTipId: ID!, commentText: String!): SurvivalTip
+    createBlogPost(input: BlogPostInput!): BlogPost
+    createPost(title: String!, content: String!): BlogPost
+    addBlogComment(blogPostId: ID!, commentText: String!): BlogPost
     removeSurvivalTip(survivalTipId: ID!): SurvivalTip
     removeComment(survivalTipId: ID!, commentId: ID!): SurvivalTip
+    removeBlogPost(blogPostId: ID!): BlogPost
+    removeBlogComment(blogPostId: ID!, commentId: ID!): BlogPost
     addChecklistItem(text: String!, priority: String!): ChecklistItem
     updateChecklistPriority(id: ID!, priority: String!): ChecklistItem
     toggleChecklistItem(id: ID!, completed: Boolean!): ChecklistItem

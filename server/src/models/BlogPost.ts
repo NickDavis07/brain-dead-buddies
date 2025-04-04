@@ -1,10 +1,11 @@
 // src/models/BlogPost.ts
 import { Schema, model, Document } from 'mongoose';
 
+// Interface matching your Category.ts style
 interface IBlogPost extends Document {
   title: string;
-  bodyText: string;
-  user: Schema.Types.ObjectId;
+  content: string;
+  categories?: Schema.Types.ObjectId[]; // Optional if you want to categorize posts later
 }
 
 const blogPostSchema = new Schema<IBlogPost>(
@@ -14,16 +15,16 @@ const blogPostSchema = new Schema<IBlogPost>(
       required: true,
       trim: true,
     },
-    bodyText: {
+    content: {
       type: String,
       required: true,
-      trim: true,
     },
-    user: {
-      type: Schema.Types.ObjectId,
-      ref: 'User', // Assuming you have a User model
-      required: true,
-    },
+    categories: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Category',
+      },
+    ],
   },
   {
     timestamps: true,
