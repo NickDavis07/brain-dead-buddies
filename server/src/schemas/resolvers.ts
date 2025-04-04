@@ -46,10 +46,6 @@ interface RemoveCommentArgs {
   commentId: string;
 }
 
-// interface AddChecklistItemArgs {
-//   text: string;
-// }
-
 interface ToggleChecklistItemArgs {
   id: string;
   completed: boolean;
