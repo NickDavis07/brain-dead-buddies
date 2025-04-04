@@ -120,7 +120,16 @@ const SurvivalChecklist = () => {
         <ul className="space-y-4">
           {checklist
             .slice() // Create a shallow copy of the array to avoid mutating the original data
-            .sort((a, b) => Number(a.completed) - Number(b.completed)) // Sort by completed status
+            .sort((a, b) => {
+              // Sort by completed status first (uncompleted items come first)
+              if (a.completed !== b.completed) {
+                return Number(a.completed) - Number(b.completed);
+              }
+
+              // For uncompleted or completed items, sort by priority
+              const priorityOrder = { High: 1, Medium: 2, Low: 3 };
+              return priorityOrder[a.priority] - priorityOrder[b.priority];
+            })
             .map((item: ChecklistItem) => (
               <li
                 key={item.id}
