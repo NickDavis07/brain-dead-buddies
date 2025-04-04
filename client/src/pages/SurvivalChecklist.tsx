@@ -75,10 +75,16 @@ const SurvivalChecklist = () => {
   };
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="container mx-auto p-4 bg-gray-900 text-white">
       {/* Page title with shadow styling */}
-      <h1 className="text-2xl font-bold text-center mb-6 text-white" style={{ textShadow: '2px 2px 0px black, -2px -2px 0px black, 2px -2px 0px black, -2px 2px 0px black' }}>
-        Survival Checklist
+      <h1
+        className="text-3xl font-bold text-center mb-6 text-red-600"
+        style={{
+          textShadow:
+            '2px 2px 0px black, -2px -2px 0px black, 2px -2px 0px black, -2px 2px 0px black',
+        }}
+      >
+        Zombie Survival Checklist
       </h1>
 
       {/* Input section for adding new checklist items */}
@@ -88,12 +94,12 @@ const SurvivalChecklist = () => {
           value={newItemText}
           onChange={(e) => setNewItemText(e.target.value)}
           placeholder="Add a new item"
-          className="bg-gray-500 text-white border border-gray-600 p-2 mr-2 rounded"
+          className="bg-gray-800 text-white border border-gray-700 p-2 mr-2 rounded"
         />
         <select
           value={newItemPriority}
           onChange={(e) => setNewItemPriority(e.target.value)}
-          className="bg-gray-500 text-white border border-gray-600 p-2 mr-2 rounded"
+          className="bg-gray-800 text-white border border-gray-700 p-2 mr-2 rounded"
         >
           <option value="Low">Low</option>
           <option value="Medium">Medium</option>
@@ -101,7 +107,7 @@ const SurvivalChecklist = () => {
         </select>
         <button
           onClick={handleAddItem}
-          className="bg-blue-500 text-white px-4 py-2 rounded"
+          className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-600"
         >
           Add
         </button>
@@ -116,13 +122,15 @@ const SurvivalChecklist = () => {
             <li
               key={item.id}
               className={`flex items-center justify-between p-4 border rounded-lg ${
-                item.completed ? 'bg-green-100 border-green-400' : 'bg-gray-500 border-gray-600'
+                item.completed
+                  ? 'bg-red-800 border-red-700'
+                  : 'bg-green-800 border-green-700'
               }`}
             >
               {/* Checklist item text with conditional styling */}
               <span
                 className={`text-lg ${
-                  item.completed ? 'line-through text-gray-300' : 'text-white'
+                  item.completed ? 'line-through text-gray-400' : 'text-white'
                 }`}
               >
                 {item.text}
@@ -133,8 +141,8 @@ const SurvivalChecklist = () => {
                   onClick={() => handleToggleComplete(item.id, item.completed)}
                   className={`px-4 py-2 rounded ${
                     item.completed
-                      ? 'bg-red-500 text-white hover:bg-red-600'
-                      : 'bg-blue-500 text-white hover:bg-blue-600'
+                      ? 'bg-gray-600 text-white hover:bg-gray-700'
+                      : 'bg-green-600 text-white hover:bg-green-700'
                   }`}
                 >
                   {item.completed ? 'Undo' : 'Complete'}
@@ -142,7 +150,7 @@ const SurvivalChecklist = () => {
                 {/* Delete button */}
                 <button
                   onClick={() => handleDeleteItem(item.id)}
-                  className="px-4 py-2 rounded bg-gray-700 text-white hover:bg-gray-800"
+                  className="px-4 py-2 rounded bg-purple-800 text-white hover:bg-purple-700"
                 >
                   Delete
                 </button>
@@ -150,17 +158,17 @@ const SurvivalChecklist = () => {
                 <select
                   value={item.priority}
                   onChange={(e) => handleUpdatePriority(item.id, e.target.value)}
-                  className={`px-4 py-2 rounded ${
+                  className={`px-4 py-2 rounded border border-gray-700 text-white ${
                     item.priority === 'Low'
-                      ? 'bg-yellow-500 text-black'
+                      ? 'bg-yellow-600'
                       : item.priority === 'Medium'
-                      ? 'bg-orange-500 text-white'
-                      : 'bg-red-500 text-white'
+                      ? 'bg-orange-600'
+                      : 'bg-red-600'
                   }`}
                 >
-                  <option value="Low">Low</option>
-                  <option value="Medium">Medium</option>
-                  <option value="High">High</option>
+                  <option value="Low" className="bg-gray-800 text-white">Low</option>
+                  <option value="Medium" className="bg-gray-800 text-white">Medium</option>
+                  <option value="High" className="bg-gray-800 text-white">High</option>
                 </select>
               </div>
             </li>
