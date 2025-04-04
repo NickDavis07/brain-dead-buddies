@@ -66,17 +66,19 @@ export const QUERY_CHECKLIST = gql`
       id
       text
       completed
+      priority
     }
   }
 `;
 
 // Mutation to add a new checklist item 
 export const ADD_CHECKLIST_ITEM = gql`
-  mutation AddChecklistItem($text: String!) {
-    addChecklistItem(text: $text) {
+  mutation AddChecklistItem($text: String!, $priority: String!) {
+    addChecklistItem(text: $text, priority: $priority) {
       id
       text
       completed
+      priority
     }
   }
 `;
@@ -103,6 +105,16 @@ export const DELETE_CHECKLIST_ITEM = gql`
   }
 `;
 
+export const UPDATE_CHECKLIST_PRIORITY = gql`
+  mutation UpdateChecklistPriority($id: ID!, $priority: String!) {
+    updateChecklistPriority(id: $id, priority: $priority) {
+      id
+      text
+      completed
+      priority
+    }
+  }
+`;
 
 export const TIP_OF_THE_DAY = gql`
   query GetTipOfTheDay {

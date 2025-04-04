@@ -46,10 +46,6 @@ interface RemoveCommentArgs {
   commentId: string;
 }
 
-interface AddChecklistItemArgs {
-  text: string;
-}
-
 interface ToggleChecklistItemArgs {
   id: string;
   completed: boolean;
@@ -221,15 +217,15 @@ const resolvers = {
       }
       throw new AuthenticationError('You need to be logged in!');
     },
-    addChecklistItem: async (_parent: any, { text }: AddChecklistItemArgs, context: any) => {
+    addChecklistItem: async (_parent: any, { text, priority }: { text: string; priority: string }, context: any) => {
       if (!context.user) {
         throw new AuthenticationError('You need to be logged in!');
       }
 
-      // Create a new checklist item for the logged-in user
       const newItem = await ChecklistItem.create({
         text,
         userId: context.user._id,
+        priority,
       });
 
       return newItem;
@@ -268,6 +264,23 @@ const resolvers = {
       }
 
       return deletedItem;
+    },
+    updateChecklistPriority: async (_parent: any, { id, priority }: { id: string; priority: string }, context: any) => {
+      if (!context.user) {
+        throw new AuthenticationError('You need to be logged in!');
+      }
+
+      const updatedItem = await ChecklistItem.findOneAndUpdate(
+        { _id: id, userId: context.user._id },
+        { priority },
+        { new: true }
+      );
+
+      if (!updatedItem) {
+        throw new Error('Checklist item not found or you are not authorized to update it.');
+      }
+
+      return updatedItem;
     },
   },
 };
