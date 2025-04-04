@@ -70,11 +70,28 @@ const SurvivalChecklist = () => {
   );
 
   return (
-    <div className="container mx-auto p-4 bg-gray-900 text-white">
-      <h1 className="text-3xl font-bold text-center mb-6 text-red-600" style={{ textShadow: '2px 2px 0px black, -2px -2px 0px black, 2px -2px 0px black, -2px 2px 0px black' }}>
+    <div className="container mx-auto p-4" style={{ maxWidth: '800px' }}>
+  <div style={{ 
+      backgroundColor: 'rgba(0, 0, 0, 0.5)',
+      borderRadius: '15px',
+      border: '2px solid #3d9a40'
+    }}>
+    <div className=" text-light p-3 bg-gray-900" style={{ 
+      borderTopLeftRadius: '13px', 
+      borderTopRightRadius: '13px',
+     
+    }}>
+      <h1 className="text-2xl font-bold text-center text-red-600" 
+          style={{ textShadow: '2px 2px 0px black, -2px -2px 0px black, 2px -2px 0px black, -2px 2px 0px black' }}>
         Zombie Survival Checklist
       </h1>
-
+    </div>
+    
+    <div className="p-4" style={{ 
+      backgroundColor: 'rgba(0, 0, 0, 0.3)',
+      borderBottomLeftRadius: '13px', 
+      borderBottomRightRadius: '13px'
+    }}>
       <AddChecklistItemForm onAddItem={handleAddItem} />
 
       {loading ? (
@@ -93,6 +110,8 @@ const SurvivalChecklist = () => {
         </ul>
       )}
     </div>
+  </div>
+</div>
   );
 };
 
