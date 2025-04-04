@@ -10,7 +10,7 @@ interface ChecklistItemProps {
 const ChecklistItem: React.FC<ChecklistItemProps> = ({ item, onToggleComplete, onDelete, onUpdatePriority }) => {
   return (
     <li
-      className={`flex flex-col sm:flex-row items-center justify-between p-4 border rounded-lg ${
+      className={`flex flex-col sm:flex-row items-center justify-between p-2 border rounded-lg ${
         item.completed ? 'bg-green-800 border-green-700' : 'bg-gray-800 border-gray-700'
       }`}
     >
@@ -50,7 +50,6 @@ const ChecklistItem: React.FC<ChecklistItemProps> = ({ item, onToggleComplete, o
         >
           {item.completed ? 'Undo' : 'Complete'}
         </button>
-
         {/* Delete Button */}
         <button
           onClick={() => onDelete(item.id)}
