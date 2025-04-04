@@ -37,6 +37,7 @@ const typeDefs = `
     text: String
     completed: Boolean
     userId: String
+    priority: String
   }
 
   input SurvivalTipInput {
@@ -74,7 +75,8 @@ const typeDefs = `
     addComment(survivalTipId: ID!, commentText: String!): SurvivalTip
     removeSurvivalTip(survivalTipId: ID!): SurvivalTip
     removeComment(survivalTipId: ID!, commentId: ID!): SurvivalTip
-    addChecklistItem(text: String!): ChecklistItem
+    addChecklistItem(text: String!, priority: String!): ChecklistItem
+    updateChecklistPriority(id: ID!, priority: String!): ChecklistItem
     toggleChecklistItem(id: ID!, completed: Boolean!): ChecklistItem
     deleteChecklistItem(id: ID!): ChecklistItem
   }

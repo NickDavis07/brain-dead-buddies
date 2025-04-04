@@ -4,6 +4,7 @@ interface IChecklistItem extends Document {
   text: string;
   completed: boolean;
   userId: string; // Associate checklist items with a user
+  priority: 'Low' | 'Medium' | 'High'; // Add priority field
 }
 
 const checklistItemSchema = new Schema<IChecklistItem>(
@@ -20,6 +21,11 @@ const checklistItemSchema = new Schema<IChecklistItem>(
     userId: {
       type: String,
       required: true,
+    },
+    priority: {
+      type: String,
+      enum: ['Low', 'Medium', 'High'],
+      default: 'Low',
     },
   },
   {
