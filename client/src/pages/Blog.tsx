@@ -3,6 +3,7 @@ import Auth from '../utils/auth';
 import { useQuery } from '@apollo/client';
 import { GET_ALL_POSTS } from '../utils/blogQueries';
 
+
 const Blog = () => {
   const { loading, data } = useQuery(GET_ALL_POSTS);
 
