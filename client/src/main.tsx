@@ -6,7 +6,7 @@ import Home from './pages/Home';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
 import Profile from './pages/Profile';
-import Blog from './pages/Blog';
+// import Blog from './pages/Blog';
 import ErrorPage from './pages/Error';
 import SurvivalChecklist from './pages/SurvivalChecklist';
 import SingleThought from './pages/SingleThought';
