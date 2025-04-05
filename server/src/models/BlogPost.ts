@@ -1,11 +1,12 @@
 // src/models/BlogPost.ts
-import { Schema, model, Document } from 'mongoose';
+import mongoose from 'mongoose';
 
-// Interface matching your Category.ts style
-interface IBlogPost extends Document {
+const { Schema, model, models } = mongoose;
+
+interface IBlogPost extends mongoose.Document {
   title: string;
   content: string;
-  categories?: Schema.Types.ObjectId[]; // Optional if you want to categorize posts later
+  categories?: mongoose.Schema.Types.ObjectId[];
 }
 
 const blogPostSchema = new Schema<IBlogPost>(
@@ -33,6 +34,6 @@ const blogPostSchema = new Schema<IBlogPost>(
   }
 );
 
-const BlogPost = model<IBlogPost>('BlogPost', blogPostSchema);
+const BlogPost = models.BlogPost as mongoose.Model<IBlogPost> || model<IBlogPost>('BlogPost', blogPostSchema);
 
 export default BlogPost;

@@ -1,10 +1,11 @@
 // src/models/BlogPost.ts
-import { Schema, model, Document } from 'mongoose';
+import mongoose, { Document, model, Types } from 'mongoose';
+const { Schema, models } = mongoose;
 
 interface IBlogPost extends Document {
   title: string;
   bodyText: string;
-  user: Schema.Types.ObjectId;
+  user: Types.ObjectId;
 }
 
 const blogPostSchema = new Schema<IBlogPost>(
@@ -32,6 +33,6 @@ const blogPostSchema = new Schema<IBlogPost>(
   }
 );
 
-const BlogPost = model<IBlogPost>('BlogPost', blogPostSchema);
+const BlogPost = models.BlogPost as mongoose.Model<IBlogPost> || model<IBlogPost>('BlogPost', blogPostSchema);
 
 export default BlogPost;
