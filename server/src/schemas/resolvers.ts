@@ -1,4 +1,4 @@
-import { SurvivalTip, User, TipOfTheDay } from '../models/index.js';
+import { SurvivalTip, User, TipOfTheDay, } from '../models/index.js';
 import { signToken, AuthenticationError } from '../utils/auth.js'; 
 import ChecklistItem from '../models/SurvivalChecklist.js';
 

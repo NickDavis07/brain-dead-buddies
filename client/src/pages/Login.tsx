@@ -20,7 +20,6 @@ const Login = () => {
 
   const handleFormSubmit = async (event: FormEvent) => {
     event.preventDefault();
-    console.log(formState);
     try {
       const { data } = await login({
         variables: { ...formState },
@@ -39,37 +38,89 @@ const Login = () => {
 
   return (
     <main className="flex-row justify-center mb-4">
-      <div className="col-12 col-lg-10">
-        <div className="card">
-          <h4 className="card-header bg-dark text-light p-2">Login</h4>
-          <div className="card-body">
+      <div className="col-12 col-lg-10 mx-auto">
+        <div style={{
+          backgroundColor: 'rgba(0, 0, 0, 0.7)',
+          borderRadius: '10px',
+          border: '2px solid #3d9a40',
+          width: '100%',
+          margin: '0 auto'
+        }}>
+          <h2 style={{
+            backgroundColor: 'rgba(20, 20, 20, 0.8)',
+            color: '#ff5555',
+            padding: '15px',
+            margin: '0',
+            borderTopLeftRadius: '8px',
+            borderTopRightRadius: '8px',
+            textAlign: 'center',
+            textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)',
+            borderBottom: '2px solid #3d9a40'
+          }}>
+            Login
+          </h2>
+          <div style={{ padding: '20px' }}>
             {data ? (
-              <p>
+              <p style={{ color: '#3d9a40', textAlign: 'center' }}>
                 Success! You may now head{' '}
-                <Link to="/">back to the homepage.</Link>
+                <Link to="/" style={{ color: '#ff5555', textDecoration: 'underline' }}>
+                  back to the homepage
+                </Link>
               </p>
             ) : (
               <form onSubmit={handleFormSubmit}>
-                <input
-                  className="form-input"
-                  placeholder="Your email"
-                  name="email"
-                  type="email"
-                  value={formState.email}
-                  onChange={handleChange}
-                />
-                <input
-                  className="form-input"
-                  placeholder="******"
-                  name="password"
-                  type="password"
-                  value={formState.password}
-                  onChange={handleChange}
-                />
+                <div style={{ marginBottom: '15px' }}>
+                  <input
+                    style={{
+                      backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                      padding: '12px',
+                      borderRadius: '5px',
+                      border: '1px solid #3d9a40',
+                      width: '100%',
+                      fontSize: '16px'
+                    }}
+                    placeholder="Your email"
+                    name="email"
+                    type="email"
+                    value={formState.email}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+                <div style={{ marginBottom: '20px' }}>
+                  <input
+                    style={{
+                      backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                      padding: '12px',
+                      borderRadius: '5px',
+                      border: '1px solid #3d9a40',
+                      width: '100%',
+                      fontSize: '16px'
+                    }}
+                    placeholder="Password"
+                    name="password"
+                    type="password"
+                    value={formState.password}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
                 <button
-                  className="btn btn-block btn-primary"
-                  style={{ cursor: 'pointer' }}
+                  style={{
+                    width: '100%',
+                    padding: '12px',
+                    backgroundColor: '#2c3e50',
+                    color: 'white',
+                    border: '1px solid #3d9a40',
+                    borderRadius: '5px',
+                    fontSize: '16px',
+                    cursor: 'pointer',
+                    fontWeight: 'bold',
+                    transition: 'background-color 0.3s'
+                  }}
                   type="submit"
+                  onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#34495e'}
+                  onMouseOut={(e) => e.currentTarget.style.backgroundColor = '#2c3e50'}
                 >
                   Submit
                 </button>
@@ -77,7 +128,14 @@ const Login = () => {
             )}
 
             {error && (
-              <div className="my-3 p-3 bg-danger text-white">
+              <div style={{ 
+                marginTop: '15px', 
+                padding: '10px', 
+                backgroundColor: 'rgba(220, 53, 69, 0.8)', 
+                color: 'white',
+                borderRadius: '5px',
+                textAlign: 'center'
+              }}>
                 {error.message}
               </div>
             )}

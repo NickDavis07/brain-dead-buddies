@@ -1,11 +1,12 @@
 // src/models/BlogPost.ts
-import mongoose, { Document, model, Types } from 'mongoose';
-const { Schema, models } = mongoose;
+import mongoose from 'mongoose';
 
-interface IBlogPost extends Document {
+const { Schema, model, models } = mongoose;
+
+interface IBlogPost extends mongoose.Document {
   title: string;
-  bodyText: string;
-  user: Types.ObjectId;
+  content: string;
+  categories?: mongoose.Schema.Types.ObjectId[];
 }
 
 const blogPostSchema = new Schema<IBlogPost>(
@@ -15,16 +16,16 @@ const blogPostSchema = new Schema<IBlogPost>(
       required: true,
       trim: true,
     },
-    bodyText: {
+    content: {
       type: String,
       required: true,
-      trim: true,
     },
-    user: {
-      type: Schema.Types.ObjectId,
-      ref: 'User', // Assuming you have a User model
-      required: true,
-    },
+    categories: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Category',
+      },
+    ],
   },
   {
     timestamps: true,
