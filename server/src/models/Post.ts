@@ -1,10 +1,9 @@
 // src/models/Post.ts
-import { Schema, model, models, Document } from 'mongoose';
+import { Schema, model, Document } from 'mongoose';
 
 interface IPost extends Document {
   title: string;
   bodyText: string;
-  password: string;
   user: Schema.Types.ObjectId;
 }
 
@@ -32,6 +31,6 @@ const postSchema = new Schema<IPost>(
   }
 );
 
-const Post = models.Post || model<IPost>('Post', postSchema);
+const Post = model<IPost>('Post', postSchema);
 
 export default Post;

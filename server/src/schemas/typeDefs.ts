@@ -5,7 +5,6 @@ const typeDefs = `
     email: String
     password: String
     survivalTips: [SurvivalTip]!
-    blogPosts: [BlogPost]!
     dateJoined: String
     role: String
   }
@@ -18,12 +17,7 @@ const typeDefs = `
     createdAt: String
     comments: [Comment]!
   }
-
-  type Category {
-    _id: ID!
-    name: String!
-  }
-
+  
   type TipOfTheDay {
     _id: ID
     text: String
@@ -47,18 +41,6 @@ const typeDefs = `
     priority: String
   }
 
-  input SurvivalTipInput {
-    tipText: String!
-    tipAuthor: String!
-    category: String!
-  }
-
-  input UserInput {
-    username: String!
-    email: String!
-    password: String!
-  }
-  
   type Auth {
     token: ID!
     user: User
@@ -79,6 +61,18 @@ const typeDefs = `
     posts: [Post!]!
     createdAt: String!
     updatedAt: String!
+  }
+
+  input SurvivalTipInput {
+    tipText: String!
+    tipAuthor: String!
+    category: String!
+  }
+
+  input UserInput {
+    username: String!
+    email: String!
+    password: String!
   }
 
   input PostInput {

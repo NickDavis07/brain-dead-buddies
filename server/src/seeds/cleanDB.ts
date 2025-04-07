@@ -1,12 +1,10 @@
-import { SurvivalTip, User, TipOfTheDay, BlogPost } from '../models/index.js';
+import { SurvivalTip, User, TipOfTheDay, } from '../models/index.js';
 import process from 'process';
 
 const cleanDB = async (): Promise<void> => {
   try {
     // Delete documents in order of dependency
-    await BlogPost.deleteMany({});
-    console.log('BlogPost collection cleaned.');
-
+    
     await SurvivalTip.deleteMany({});
     console.log('SurvivalTip collection cleaned.');
 
