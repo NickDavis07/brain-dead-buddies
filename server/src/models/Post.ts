@@ -1,14 +1,14 @@
-// src/models/BlogPost.ts
-import mongoose, { Document, model, Types } from 'mongoose';
-const { Schema, models } = mongoose;
+// src/models/Post.ts
+import { Schema, model, models, Document } from 'mongoose';
 
-interface IBlogPost extends Document {
+interface IPost extends Document {
   title: string;
   bodyText: string;
-  user: Types.ObjectId;
+  password: string;
+  user: Schema.Types.ObjectId;
 }
 
-const blogPostSchema = new Schema<IBlogPost>(
+const postSchema = new Schema<IPost>(
   {
     title: {
       type: String,
@@ -22,8 +22,7 @@ const blogPostSchema = new Schema<IBlogPost>(
     },
     user: {
       type: Schema.Types.ObjectId,
-      ref: 'User', 
-      required: true,
+      ref: 'User',
     },
   },
   {
@@ -33,6 +32,6 @@ const blogPostSchema = new Schema<IBlogPost>(
   }
 );
 
-const BlogPost = models.BlogPost as mongoose.Model<IBlogPost> || model<IBlogPost>('BlogPost', blogPostSchema);
+const Post = models.Post || model<IPost>('Post', postSchema);
 
-export default BlogPost;
+export default Post;
