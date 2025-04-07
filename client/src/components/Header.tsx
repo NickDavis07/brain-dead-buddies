@@ -13,13 +13,20 @@ const Header = () => {
   const [isProfileHovered, setIsProfileHovered] = useState(false);
 
   return (
-    <header className="bg-dark text-light mb-4 py-3">
+    <header 
+      className="text-light mb-4 py-3" 
+      style={{ 
+      backgroundImage: "url('src/assets/header_background.png')", // Ensure you have this image in your public/assets folder
+      backgroundSize: "cover", 
+      backgroundPosition: "center" 
+      }}
+    >
       <div className="container mx-auto">
-        <div style={{ 
-          display: "grid", 
-          gridTemplateColumns: "100px 1fr 100px", 
-          alignItems: "center" 
-        }}>
+      <div style={{ 
+        display: "grid", 
+        gridTemplateColumns: "100px 1fr 100px", 
+        alignItems: "center" 
+      }}>
           {/* Left: Zombie Logo */}
           <div>
             <img 
@@ -93,7 +100,7 @@ const Header = () => {
                     <span 
                       className="mb-1" 
                       style={{ 
-                        fontSize: "14px", 
+                        fontSize: "24px", 
                         fontWeight: "bold",
                         color: isProfileHovered ? "#00ff00" : "#fff",
                         textShadow: isProfileHovered ? "0 0 5px rgba(0, 255, 0, 0.8)" : "none",
@@ -106,8 +113,8 @@ const Header = () => {
                     {/* Profile image container */}
                     <div style={{
                       position: "relative",
-                      width: "50px",
-                      height: "50px",
+                      width: "80px",
+                      height: "60px",
                       borderRadius: "50%"
                     }}>
                       {/* The actual profile image */}
@@ -115,8 +122,8 @@ const Header = () => {
                         src={logo2}
                         alt="Profile Icon"
                         style={{
-                          width: "50px",
-                          height: "50px",
+                          width: "90px",
+                          height: "65px",
                           borderRadius: "50%",
                           filter: isProfileHovered ? "drop-shadow(0 0 3px rgba(0, 255, 0, 0.8))" : "none",
                           transition: "all 0.3s ease"
