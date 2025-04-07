@@ -9,7 +9,14 @@ const Header = () => {
   };
 
   return (
-    <header className="bg-dark text-light mb-4 py-3 flex-row align-center">
+    <header
+      className="text-light mb-4 py-3 flex-row align-center"
+      style={{
+        backgroundImage: "url('./src/assets/header_background.png')", // Replace with the actual path to your image
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+    >
       <div className="container flex-row justify-space-between-lg justify-center align-center">
         {/* Left Logo */}
         <div className="d-flex align-items-center" style={{ position: "absolute", left: "30px" }}>
@@ -58,8 +65,8 @@ const Header = () => {
               src={logo2} // Use the scared_brain.png asset as the profile icon
               alt="Profile Icon"
               style={{
-                width: "40px",
-                height: "40px",
+                width: "80px",
+                height: "80px",
                 borderRadius: "50%",
               }}
             />
