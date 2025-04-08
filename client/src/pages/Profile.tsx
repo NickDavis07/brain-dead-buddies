@@ -1,20 +1,65 @@
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
-import { QUERY_USER, QUERY_ME } from '../utils/queries';
+import { QUERY_USER, QUERY_ME, QUERY_CHECKLIST } from '../utils/queries';
 import Auth from '../utils/auth';
-import zombieIcon from '../assets/scared_brain.png'; // Using your existing brain icon
-import { useEffect } from 'react';
+import zombieIcon from '../assets/scared_brain.png';
+import { useEffect, useState } from 'react';
+import SurvivalLifeBar from '../components/SurvivalLifeBar';
 
 const Profile = () => {
   const { username: userParam } = useParams();
+  const [completedItems, setCompletedItems] = useState(0);
+  const [highPriorityCompleted, setHighPriorityCompleted] = useState(0);
+  const [mediumPriorityCompleted, setMediumPriorityCompleted] = useState(0);
+  const [lowPriorityCompleted, setLowPriorityCompleted] = useState(0);
 
-  const { loading, data } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
+  // Fetch user data
+  const { loading: userLoading, data: userData } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
     variables: { username: userParam },
     fetchPolicy: 'network-only'
   });
 
-  const user = data?.me || data?.user || {};
+  // Fetch checklist data to count completed items
+  const { loading: checklistLoading, data: checklistData } = useQuery(QUERY_CHECKLIST, {
+    fetchPolicy: 'network-only',
+    skip: !Auth.loggedIn() // Skip query if not logged in
+  });
+
+  const user = userData?.me || userData?.user || {};
   
+  // Calculate completed items whenever the checklist data changes
+  useEffect(() => {
+    if (checklistData?.checklist) {
+      console.log("Checklist data:", checklistData.checklist);
+
+      // Count total completed items
+      const completed = checklistData.checklist.filter((item: any) => item.completed === true).length;
+      
+      // Count completed items by priority
+      const highPriority = checklistData.checklist.filter((item: any) => 
+        item.completed === true && item.priority === 'High'
+      ).length;
+      
+      const mediumPriority = checklistData.checklist.filter((item: any) => 
+        item.completed === true && item.priority === 'Medium'
+      ).length;
+      
+      const lowPriority = checklistData.checklist.filter((item: any) => 
+        item.completed === true && item.priority === 'Low'
+      ).length;
+      
+      console.log("Completed items count:", completed);
+      console.log("High priority completed:", highPriority);
+      console.log("Medium priority completed:", mediumPriority);
+      console.log("Low priority completed:", lowPriority);
+      
+      setCompletedItems(completed);
+      setHighPriorityCompleted(highPriority);
+      setMediumPriorityCompleted(mediumPriority);
+      setLowPriorityCompleted(lowPriority);
+    }
+  }, [checklistData]);
+
   // Debug log to check what's coming back from server
   useEffect(() => {
     if (user) {
@@ -22,6 +67,27 @@ const Profile = () => {
       console.log("Date joined:", user.dateJoined);
     }
   }, [user]);
+  
+  const calculateHealthPercentage = () => {
+    // Base health starts at 50%
+    let health = 50;
+    
+    // Add health based on completed checklist items by priority
+    const highPriorityBonus = highPriorityCompleted * 10;  // 10% per high priority task
+    const mediumPriorityBonus = mediumPriorityCompleted * 8;  // 8% per medium priority task
+    const lowPriorityBonus = lowPriorityCompleted * 4;  // 4% per low priority task
+    
+    // Add bonuses to health
+    health += highPriorityBonus + mediumPriorityBonus + lowPriorityBonus;
+    
+    // Add health based on days survived (max 10% bonus)
+    const daysSurvived = calculateDaysSurvived();
+    const daysBonus = Math.min(10, daysSurvived);
+    health += daysBonus;
+    
+    // Cap health at 100%
+    return Math.min(100, health);
+  };
   
   // Calculate days survived (days since joining)
   const calculateDaysSurvived = () => {
@@ -46,13 +112,18 @@ const Profile = () => {
     }
   };
   
-  // Calculate survival level based on tips created
+  // Calculate survival level based on completed checklist items
   const calculateSurvivalLevel = () => {
-    const tipsCount = user.survivalTips?.length || 0;
-    
-    if (tipsCount >= 10) return "Apocalypse Expert";
-    if (tipsCount >= 5) return "Seasoned Survivor";
-    if (tipsCount >= 1) return "Survival Rookie";
+    if (completedItems >= 25) return "Zombie Whisperer";
+    if (completedItems >= 20) return "Apocalypse Legend";
+    if (completedItems >= 15) return "Wasteland Warlord";
+    if (completedItems >= 12) return "Apocalypse Expert";
+    if (completedItems >= 10) return "Brain Harvester";
+    if (completedItems >= 8) return "Zombie Slayer";
+    if (completedItems >= 6) return "Seasoned Survivor"; 
+    if (completedItems >= 4) return "Scavenger";
+    if (completedItems >= 2) return "Survival Rookie";
+    if (completedItems >= 1) return "Walker Bait";
     return "Fresh Meat";
   };
   
@@ -82,7 +153,7 @@ const Profile = () => {
     }
   };
 
-  if (loading) {
+  if (userLoading || checklistLoading) {
     return <div className="loading-container">
       <div className="text-light">Loading survivor data...</div>
     </div>;
@@ -170,6 +241,10 @@ const Profile = () => {
             >
               {calculateSurvivalLevel()}
             </div>
+            <SurvivalLifeBar 
+              healthPercentage={calculateHealthPercentage()} 
+              label="Survivor Health" 
+            />
           </div>
           
           {/* Survivor Stats */}
@@ -218,7 +293,7 @@ const Profile = () => {
                   </div>
                 </div>
                 
-                {/* Survival Tips */}
+                {/* Completed Checklist Items */}
                 <div className="col-md-4 mb-3">
                   <div 
                     style={{ 
@@ -235,9 +310,9 @@ const Profile = () => {
                         marginBottom: '5px'
                       }}
                     >
-                      {user.survivalTips?.length || 0}
+                      {completedItems}
                     </h1>
-                    <p className="text-light m-0">Survival Tips</p>
+                    <p className="text-light m-0">Tasks Completed</p>
                   </div>
                 </div>
                 
