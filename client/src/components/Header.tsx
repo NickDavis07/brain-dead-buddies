@@ -15,7 +15,7 @@ const Header = () => {
     <header 
       className="text-light mb-4 py-3" 
       style={{ 
-        backgroundImage: "url('src/assets/header_background.png')",
+        backgroundImage: "url('/src/assets/header_background.png')", // Use an absolute path
         backgroundSize: "cover", 
         backgroundPosition: "center" 
       }}
