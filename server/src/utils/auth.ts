@@ -25,7 +25,11 @@ export const authenticateToken = ({ req }: any) => {
     req.user = data;
   } catch (err) {
     // If the token is invalid, log an error message
-    console.log('Invalid token');
+    if (err instanceof Error) {
+      console.log('Invalid token:', err.message); // More useful
+    } else {
+      console.log('Invalid token:', err); // Fallback for non-Error types
+    }
   }
 
   // Return the request object

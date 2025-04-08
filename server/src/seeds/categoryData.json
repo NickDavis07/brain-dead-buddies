@@ -1,16 +1,42 @@
-{
-  "categories": [
-    { "name": "Survival Tips" },
-    { "name": "Zombie Lore" }
-  ],
-  "posts": [
-    {
-      "title": "How to Barricade Your House",
-      "bodyText": "Use wooden planks and nails for best results."
-    },
-    {
-      "title": "Types of Zombies",
-      "bodyText": "Slow walkers vs. fast runners."
-    }
-  ]
-}
+[
+  {
+    "blogText": "The 5 most effective household weapons against walkers - spoiler: your kitchen is better armed than you think.",
+    "blogAuthor": "ZombieSlayer42"
+  },
+  {
+    "blogText": "Urban camouflage techniques: How to move through cities without attracting hordes. Light refraction matters more than scent!",
+    "blogAuthor": "ApocalypseAce"
+  },
+  {
+    "blogText": "Bunker ventilation hacks: Keep your air fresh without revealing your location. The coffee filter trick saves lives.",
+    "blogAuthor": "BunkerBandit"
+  },
+  {
+    "blogText": "Walker decomposition timeline: Why months 3-6 are actually the most dangerous. Our research proves it.",
+    "blogAuthor": "UndeadScholar"
+  },
+  {
+    "blogText": "Nomad's guide to highway navigation: Which road signs predict safe routes and which scream 'ambush ahead'.",
+    "blogAuthor": "NightmareNomad"
+  },
+  {
+    "blogText": "The 3-second rule is dead. New findings show infection spreads instantly through open wounds. Throw out your old first aid kits.",
+    "blogAuthor": "ZombieSlayer42"
+  },
+  {
+    "blogText": "Rainwater collection systems that filter walker contaminants. The tarp-and-charcoal method has 97% efficacy.",
+    "blogAuthor": "ApocalypseAce"
+  },
+  {
+    "blogText": "Sound frequency experiments: We tested which noises attract walkers from farthest distances. Never hum this tune again.",
+    "blogAuthor": "UndeadScholar"
+  },
+  {
+    "blogText": "Scavenging psychology: Why the middle shelves in abandoned stores hold the most untouched supplies.",
+    "blogAuthor": "BunkerBandit"
+  },
+  {
+    "blogText": "Moonless night travel protocols: How we covered 18 miles undetected using only starlight navigation.",
+    "blogAuthor": "NightmareNomad"
+  }
+]
