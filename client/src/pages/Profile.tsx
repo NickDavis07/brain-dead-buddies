@@ -16,6 +16,7 @@ const Profile = () => {
   
   // This if condition checks if the user is logged in and if the logged-in user's username matches the userParam.
   if (Auth.loggedIn() && Auth.getProfile().data.username === userParam) {
+    // If the condition is true, it navigates to the "/me" route, which is likely the user's profile page.
     return <Navigate to="/me" />;
   }
 
@@ -25,7 +26,7 @@ const Profile = () => {
 
   if (!user?.username) {
     return (
-      <h4 className="text-white">
+      <h4>
         You need to be logged in to see this. Use the navigation links above to
         sign up or log in!
       </h4>
@@ -38,10 +39,6 @@ const Profile = () => {
         <h2 className="col-12 col-md-10 bg-dark text-light p-3 mb-5">
           Viewing {userParam ? `${user.username}'s` : 'your'} profile.
         </h2>
-        <div className="col-12 col-md-10 bg-light text-dark p-3">
-          <p><strong>Username:</strong> {user.username}</p>
-          <p><strong>Email:</strong> {user.email}</p>
-        </div>
       </div>
     </div>
   );

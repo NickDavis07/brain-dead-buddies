@@ -24,20 +24,22 @@ class AuthService {
   }
 
   // This method checks if the provided token is expired.
-  isTokenExpired(token: string) {
-    try {
-      // jwtDecode decodes the token to check its expiration date.
-      const decoded = jwtDecode<JwtPayload>(token);
-
-      // Returns true if the token has expired, false otherwise.
-      if (decoded?.exp && decoded?.exp < Date.now() / 1000) {
-        return true;
-      }
-    } catch (err) {
-      // If decoding fails, assume the token is not expired.
-      return false;
+isTokenExpired(token: string) {
+  try {
+    const decoded = jwtDecode<JwtPayload>(token);
+    console.log("Token expiration:", decoded.exp);
+    console.log("Current time:", Date.now() / 1000);
+    
+    if (decoded?.exp && decoded?.exp < Date.now() / 1000) {
+      console.log("Token expired");
+      return true;
     }
+    return false;
+  } catch (err) {
+    console.error("Error decoding token:", err);
+    return true; // Consider token invalid if it can't be decoded
   }
+}
 
   // This method retrieves the token from localStorage.
   getToken(): string {
