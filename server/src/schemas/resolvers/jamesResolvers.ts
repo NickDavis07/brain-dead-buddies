@@ -1,63 +1,163 @@
-// import { SurvivalTip, User, TipOfTheDay, } from '../models/index.js';
-// import { signToken, AuthenticationError } from '../utils/auth.js'; 
-// import ChecklistItem from '../models/SurvivalChecklist.js';
+import { Category, Post, } from '../../models/index.js';
 
-// Define types for the arguments
-// interface AddUserArgs {
-//   input:{
-//     username: string;
-//     email: string;
-//     password: string;
-//   }
-// }
+interface PostArgs {
+  postId: string;
+}
 
-// interface LoginUserArgs {
-//   email: string;
-//   password: string;
-// }
+interface AddPostArgs {
+  title: string;
+  bodyText: string;
+  userId: string;
+}
 
-// interface UserArgs {
-//   username: string;
-// }
+interface ModifyPostArgs {
+  postId: string;
+  title?: string;
+  bodyText?: string;
+}
 
-// interface SurvivalTipArgs {
-//   survivalTipId: string;
-// }
+interface CategoryArgs {
+  categoryId: string;
+}
 
-// interface CategoryArgs {
-//   category: string;
-// }
+interface AddCategoryArgs {
+  name: string;
+}
 
-// interface AddSurvivalTipArgs {
-//   input:{
-//     tipText: string;
-//     tipAuthor: string;
-//     category: string;
-//   }
-// }
+interface ModifyCategoryArgs {
+  categoryId: string;
+  name?: string;
+}
 
-// interface AddCommentArgs {
-//   survivalTipId: string;
-//   commentText: string;
-// }
-
-// interface RemoveCommentArgs {
-//   survivalTipId: string;
-//   commentId: string;
-// }
-
-// interface ToggleChecklistItemArgs {
-//   id: string;
-//   completed: boolean;
-// }
+interface AssignCategoryArgs {
+  postId: string;
+  categoryId: string;
+}
 
 const resolvers = {
   Query: {
-    
+    fetchAllPosts: async () => {
+      return await Post.find()
+        .sort({ createdAt: -1 })
+        .populate('user')
+        .populate('categories');
+    },
+    fetchPost: async (_parent: unknown, { postId }: PostArgs) => {
+      return await Post.findById(postId)
+        .populate('user')
+        .populate('categories');
+    },
+    fetchUserPosts: async (_parent: unknown, { userId }: { userId: string }) => {
+      return await Post.find({ user: userId })
+        .sort({ createdAt: -1 })
+        .populate('categories');
+    },
+    fetchAllCategories: async () => {
+      return await Category.find().sort({ name: 1 });
+    },
+    fetchCategory: async (_parent: unknown, { categoryId }: CategoryArgs) => {
+      return await Category.findById(categoryId).populate('posts');
+    },
+    fetchPostsByCategory: async (_parent: unknown, { categoryId }: CategoryArgs) => {
+      const category = await Category.findById(categoryId)
+        .populate({
+          path: 'posts',
+          populate: [
+            { path: 'user' },
+            { path: 'categories' }
+          ]
+        });
+      return category?.posts || [];
+    },
   },
   Mutation: {
-    
+    addPost: async (_parent: unknown, { title, bodyText, userId }: AddPostArgs) => {
+      const post = await Post.create({ title, bodyText, user: userId });
+      return post.populate('user');
+    },
+    modifyPost: async (_parent: unknown, { postId, title, bodyText }: ModifyPostArgs) => {
+      return await Post.findByIdAndUpdate(
+        postId,
+        { title, bodyText },
+        { new: true }
+      )
+      .populate('user')
+      .populate('categories');
+    },
+    removePost: async (_parent: unknown, { postId }: PostArgs) => {
+      await Category.updateMany(
+        { posts: postId },
+        { $pull: { posts: postId } }
+      );
+      await Post.findByIdAndDelete(postId);
+      return true;
+    },
+    addCategory: async (_parent: unknown, { name }: AddCategoryArgs) => {
+      return await Category.create({ name });
+    },
+    modifyCategory: async (_parent: unknown, { categoryId, name }: ModifyCategoryArgs) => {
+      return await Category.findByIdAndUpdate(
+        categoryId,
+        { name },
+        { new: true }
+      );
+    },
+    removeCategory: async (_parent: unknown, { categoryId }: CategoryArgs) => {
+      await Post.updateMany(
+        { categories: categoryId },
+        { $pull: { categories: categoryId } }
+      );
+      await Category.findByIdAndDelete(categoryId);
+      return true;
+    },
+    assignCategoryToPost: async (_parent: unknown, { postId, categoryId }: AssignCategoryArgs) => {
+      await Post.findByIdAndUpdate(
+        postId,
+        { $addToSet: { categories: categoryId } },
+        { new: true }
+      );
+      
+      await Category.findByIdAndUpdate(
+        categoryId,
+        { $addToSet: { posts: postId } },
+        { new: true }
+      );
+      
+      return Post.findById(postId)
+        .populate('user')
+        .populate('categories');
+    },
+    unassignCategoryFromPost: async (_parent: unknown, { postId, categoryId }: AssignCategoryArgs) => {
+      await Post.findByIdAndUpdate(
+        postId,
+        { $pull: { categories: categoryId } },
+        { new: true }
+      );
+      
+      await Category.findByIdAndUpdate(
+        categoryId,
+        { $pull: { posts: postId } },
+        { new: true }
+      );
+      
+      return Post.findById(postId)
+        .populate('user')
+        .populate('categories');
+    },
   },
+  Post: {
+    categories: async (parent: any) => {
+      return await parent.populate('categories').execPopulate().categories;
+    },
+    user: async (parent: any) => {
+      return await parent.populate('user').execPopulate().user;
+    }
+  },
+  Category: {
+    posts: async (parent: any) => {
+      return await parent.populate('posts').execPopulate().posts;
+    }
+  }
 };
 
 export default resolvers;
