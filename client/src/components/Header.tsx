@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import Auth from "../utils/auth";
 import logo from "../assets/Zombie_logo.png";
 import logo2 from "../assets/scared_brain.png";
+import headerBackground from "../assets/header_background.png"; // Import the background image
 import { useState } from "react";
 
 const Header = () => {
@@ -15,7 +16,7 @@ const Header = () => {
     <header 
       className="text-light mb-4 py-3" 
       style={{ 
-        backgroundImage: "url('/src/assets/header_background.png')", // Use an absolute path
+        backgroundImage: `url(${headerBackground})`, // Use the imported image
         backgroundSize: "cover", 
         backgroundPosition: "center" 
       }}
