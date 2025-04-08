@@ -1,0 +1,16 @@
+{
+  "categories": [
+    { "name": "Survival Tips" },
+    { "name": "Zombie Lore" }
+  ],
+  "posts": [
+    {
+      "title": "How to Barricade Your House",
+      "bodyText": "Use wooden planks and nails for best results."
+    },
+    {
+      "title": "Types of Zombies",
+      "bodyText": "Slow walkers vs. fast runners."
+    }
+  ]
+}

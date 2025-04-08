@@ -10,6 +10,7 @@ import Blog from './pages/Blog';
 import ErrorPage from './pages/Error';
 import SurvivalChecklist from './pages/SurvivalChecklist';
 import SingleThought from './pages/SingleThought';
+import CreateBlogPost from './pages/CreateBlogPost.js';
 
 const router = createBrowserRouter([
   {
@@ -41,6 +42,9 @@ const router = createBrowserRouter([
       }, {
         path: '/thoughts/:thoughtId',
         element: <SingleThought />
+      }, {
+        path: '/blog/new',
+        element: <CreateBlogPost />
       }
     ]
   },
