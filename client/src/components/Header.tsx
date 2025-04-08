@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import Auth from "../utils/auth";
-import logo from "../assets/Zombie_logo.png"; // Adjust path if necessary
-import logo2 from "../assets/scared_brain.png"; // Use this as the profile icon
+import logo from "../assets/Zombie_logo.png";
+import logo2 from "../assets/scared_brain.png";
 import { useState } from "react";
 
 const Header = () => {
@@ -9,24 +9,23 @@ const Header = () => {
     Auth.logout();
   };
   
-  // State to track hover for the profile
   const [isProfileHovered, setIsProfileHovered] = useState(false);
 
   return (
     <header 
       className="text-light mb-4 py-3" 
       style={{ 
-      backgroundImage: "url('src/assets/header_background.png')", // Ensure you have this image in your public/assets folder
-      backgroundSize: "cover", 
-      backgroundPosition: "center" 
+        backgroundImage: "url('src/assets/header_background.png')",
+        backgroundSize: "cover", 
+        backgroundPosition: "center" 
       }}
     >
       <div className="container mx-auto">
-      <div style={{ 
-        display: "grid", 
-        gridTemplateColumns: "100px 1fr 100px", 
-        alignItems: "center" 
-      }}>
+        <div style={{ 
+          display: "grid", 
+          gridTemplateColumns: "100px 1fr 100px", 
+          alignItems: "center" 
+        }}>
           {/* Left: Zombie Logo */}
           <div>
             <img 
@@ -39,9 +38,27 @@ const Header = () => {
           
           {/* Center: Title, Description and Buttons */}
           <div className="text-center" style={{ flex: 1, margin: "0 20px" }}>
-            <Link className="text-light" to="/">
-              <h1 className="m-0">Brain Dead Buddies</h1>
+            <Link className="text-decoration-none" to="/">
+              {/* Military-style font title */}
+              <h1 className="m-0" style={{
+                fontFamily: "'Black Ops One', 'Orbitron', sans-serif",
+                fontSize: "2.6rem",
+                letterSpacing: "3px",
+                color: "#FFFFFF",
+                textTransform: "uppercase",
+                fontWeight: "400",
+                textShadow: "2px 2px 0px #990000, 4px 4px 0px rgba(0, 0, 0, 0.5)",
+                margin: "0 auto 10px auto",
+                padding: "5px 0"
+              }}>
+                Brain Dead Buddies
+              </h1>
             </Link>
+            
+            {/* Add this in your index.html head section or CSS file:
+            <link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+            */}
+            
             <p className="m-0 mb-2">
               Brain Dead Buddies is a zombie survival checklist and tips forum to help you outsmart the brain-dead before they get your brains.
             </p>
@@ -83,53 +100,47 @@ const Header = () => {
                   onMouseEnter={() => setIsProfileHovered(true)}
                   onMouseLeave={() => setIsProfileHovered(false)}
                 >
-                  {/* Container with glowing box effect */}
+                  {/* Dark box container with the profile */}
                   <div
                     style={{
                       display: "flex",
                       flexDirection: "column",
                       alignItems: "center",
-                      padding: "8px",
+                      backgroundColor: "transparent",
                       borderRadius: "8px",
-                      backgroundColor: isProfileHovered ? "rgba(0, 255, 0, 0.1)" : "transparent",
-                      boxShadow: isProfileHovered ? "0 0 10px 3px rgba(0, 255, 0, 0.7)" : "none",
-                      transition: "all 0.3s ease"
+                      padding: "8px 14px",
+                      boxShadow: isProfileHovered ? "0 0 8px 2px #990000, 0 0 12px 4px rgba(153, 0, 0, 0.5)" : "none",
+                      transition: "all 0.3s ease",
+                      width: "fit-content",
+                      minWidth: "140px"
                     }}
                   >
-                    {/* Username with glow effect */}
+                    {/* Username */}
                     <span 
-                      className="mb-1" 
                       style={{ 
-                        fontSize: "24px", 
-                        fontWeight: "bold",
-                        color: isProfileHovered ? "#00ff00" : "#fff",
-                        textShadow: isProfileHovered ? "0 0 5px rgba(0, 255, 0, 0.8)" : "none",
+                        fontSize: "16px", 
+                        fontWeight: "500",
+                        color: isProfileHovered ? "#ff3333" : "#ffffff",
+                        textShadow: isProfileHovered ? "0 0 5px rgba(153, 0, 0, 0.8)" : "none",
+                        marginBottom: "6px",
                         transition: "all 0.3s ease"
                       }}
                     >
                       {Auth.getProfile().data.username}
                     </span>
                     
-                    {/* Profile image container */}
-                    <div style={{
-                      position: "relative",
-                      width: "80px",
-                      height: "60px",
-                      borderRadius: "50%"
-                    }}>
-                      {/* The actual profile image */}
-                      <img
-                        src={logo2}
-                        alt="Profile Icon"
-                        style={{
-                          width: "90px",
-                          height: "65px",
-                          borderRadius: "50%",
-                          filter: isProfileHovered ? "drop-shadow(0 0 3px rgba(0, 255, 0, 0.8))" : "none",
-                          transition: "all 0.3s ease"
-                        }}
-                      />
-                    </div>
+                    {/* Profile image - below the username */}
+                    <img
+                      src={logo2}
+                      alt="Profile Icon"
+                      style={{
+                        width: "70px",
+                        height: "70px",
+                        borderRadius: "50%",
+                        filter: isProfileHovered ? "drop-shadow(0 0 3px rgba(153, 0, 0, 0.8))" : "none",
+                        transition: "all 0.3s ease"
+                      }}
+                    />
                   </div>
                 </Link>
               </div>
