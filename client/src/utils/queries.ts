@@ -6,6 +6,11 @@ export const QUERY_USER = gql`
       _id
       username
       email
+      dateJoined
+      role
+       survivalTips {
+        _id
+      }
     }
   }
 `;
@@ -44,6 +49,11 @@ export const QUERY_ME = gql`
       _id
       username
       email
+      dateJoined
+      role
+       survivalTips {
+        _id
+      }
     }
   }
 `;
