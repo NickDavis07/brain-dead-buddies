@@ -42,12 +42,12 @@ const resolvers = {
         .populate('user')
         .populate('categories');
     },
-    fetchPost: async (_parent: unknown, { postId }: PostArgs) => {
+    fetchPost: async (_parent: any, { postId }: PostArgs) => {
       return await Post.findById(postId)
         .populate('user')
         .populate('categories');
     },
-    fetchUserPosts: async (_parent: unknown, { userId }: { userId: string }) => {
+    fetchUserPosts: async (_parent: any, { userId }: { userId: string }) => {
       return await Post.find({ user: userId })
         .sort({ createdAt: -1 })
         .populate('categories');
@@ -55,10 +55,10 @@ const resolvers = {
     fetchAllCategories: async () => {
       return await Category.find().sort({ name: 1 });
     },
-    fetchCategory: async (_parent: unknown, { categoryId }: CategoryArgs) => {
+    fetchCategory: async (_parent: any, { categoryId }: CategoryArgs) => {
       return await Category.findById(categoryId).populate('posts');
     },
-    fetchPostsByCategory: async (_parent: unknown, { categoryId }: CategoryArgs) => {
+    fetchPostsByCategory: async (_parent: any, { categoryId }: CategoryArgs) => {
       const category = await Category.findById(categoryId)
         .populate({
           path: 'posts',
@@ -71,11 +71,11 @@ const resolvers = {
     },
   },
   Mutation: {
-    addPost: async (_parent: unknown, { title, bodyText, userId }: AddPostArgs) => {
+    addPost: async (_parent: any, { title, bodyText, userId }: AddPostArgs) => {
       const post = await Post.create({ title, bodyText, user: userId });
       return post.populate('user');
     },
-    modifyPost: async (_parent: unknown, { postId, title, bodyText }: ModifyPostArgs) => {
+    modifyPost: async (_parent: any, { postId, title, bodyText }: ModifyPostArgs) => {
       return await Post.findByIdAndUpdate(
         postId,
         { title, bodyText },
@@ -84,7 +84,7 @@ const resolvers = {
       .populate('user')
       .populate('categories');
     },
-    removePost: async (_parent: unknown, { postId }: PostArgs) => {
+    removePost: async (_parent: any, { postId }: PostArgs) => {
       await Category.updateMany(
         { posts: postId },
         { $pull: { posts: postId } }
@@ -92,17 +92,17 @@ const resolvers = {
       await Post.findByIdAndDelete(postId);
       return true;
     },
-    addCategory: async (_parent: unknown, { name }: AddCategoryArgs) => {
+    addCategory: async (_parent: any, { name }: AddCategoryArgs) => {
       return await Category.create({ name });
     },
-    modifyCategory: async (_parent: unknown, { categoryId, name }: ModifyCategoryArgs) => {
+    modifyCategory: async (_parent: any, { categoryId, name }: ModifyCategoryArgs) => {
       return await Category.findByIdAndUpdate(
         categoryId,
         { name },
         { new: true }
       );
     },
-    removeCategory: async (_parent: unknown, { categoryId }: CategoryArgs) => {
+    removeCategory: async (_parent: any, { categoryId }: CategoryArgs) => {
       await Post.updateMany(
         { categories: categoryId },
         { $pull: { categories: categoryId } }
@@ -110,7 +110,7 @@ const resolvers = {
       await Category.findByIdAndDelete(categoryId);
       return true;
     },
-    assignCategoryToPost: async (_parent: unknown, { postId, categoryId }: AssignCategoryArgs) => {
+    assignCategoryToPost: async (_parent: any, { postId, categoryId }: AssignCategoryArgs) => {
       await Post.findByIdAndUpdate(
         postId,
         { $addToSet: { categories: categoryId } },
@@ -127,7 +127,7 @@ const resolvers = {
         .populate('user')
         .populate('categories');
     },
-    unassignCategoryFromPost: async (_parent: unknown, { postId, categoryId }: AssignCategoryArgs) => {
+    unassignCategoryFromPost: async (_parent: any, { postId, categoryId }: AssignCategoryArgs) => {
       await Post.findByIdAndUpdate(
         postId,
         { $pull: { categories: categoryId } },

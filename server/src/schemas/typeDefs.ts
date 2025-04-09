@@ -87,46 +87,48 @@ const typeDefs = `
   }
 
   type Query {
-  categories: [Category]!
-  category(categoryId: ID!): Category
-  posts: [Post]!
-  post(postId: ID!): Post
-  users: [User]
-  user(username: String!): User
-  survivalTips: [SurvivalTip]!
-  survivalTip(survivalTipId: ID!): SurvivalTip
-  survivalTipsByCategory(category: String!): [SurvivalTip]
-  me: User
-  checklist: [ChecklistItem]
-  tipOfTheDay: TipOfTheDay
-  fetchAllPosts: [Post]
-  fetchPost(postId: ID!): Post
-  fetchUserPosts(userId: ID!): [Post]
-  fetchAllCategories: [Category]
-  fetchCategory(categoryId: ID!): Category
-  fetchPostsByCategory(categoryId: ID!): [Post]
-}
+    categories: [Category]!
+    category(categoryId: ID!): Category
+    posts: [Post]!
+    post(postId: ID!): Post
+    users: [User]
+    user(username: String!): User
+    survivalTips: [SurvivalTip]!
+    survivalTip(survivalTipId: ID!): SurvivalTip
+    survivalTipsByCategory(category: String!): [SurvivalTip]
+    me: User
+    checklist: [ChecklistItem]
+    tipOfTheDay: TipOfTheDay
+    getAllPosts: [Post]
+    fetchAllPosts: [Post]
+    fetchPost(postId: ID!): Post
+    fetchUserPosts(userId: ID!): [Post]
+    fetchAllCategories: [Category]
+    fetchCategory(categoryId: ID!): Category
+    fetchPostsByCategory(categoryId: ID!): [Post]
+  }
 
   type Mutation {
-  addCategory(input: CategoryInput!): Category
-  addPost(input: PostInput!): Post
-  addUser(input: UserInput!): Auth
-  login(email: String!, password: String!): Auth
-  addSurvivalTip(input: SurvivalTipInput!): SurvivalTip
-  addComment(survivalTipId: ID!, commentText: String!): SurvivalTip
-  removeSurvivalTip(survivalTipId: ID!): SurvivalTip
-  removeComment(survivalTipId: ID!, commentId: ID!): SurvivalTip
-  addChecklistItem(text: String!, priority: String!): ChecklistItem
-  updateChecklistPriority(id: ID!, priority: String!): ChecklistItem
-  toggleChecklistItem(id: ID!, completed: Boolean!): ChecklistItem
-  deleteChecklistItem(id: ID!): ChecklistItem
-  modifyPost(postId: ID!, title: String, bodyText: String): Post
-  removePost(postId: ID!): Boolean
-  modifyCategory(categoryId: ID!, name: String): Category
-  removeCategory(categoryId: ID!): Boolean
-  assignCategoryToPost(postId: ID!, categoryId: ID!): Post
-  unassignCategoryFromPost(postId: ID!, categoryId: ID!): Post
-}
+    addCategory(input: CategoryInput!): Category
+    addPost(input: PostInput!): Post
+    addUser(input: UserInput!): Auth
+    login(email: String!, password: String!): Auth
+    addSurvivalTip(input: SurvivalTipInput!): SurvivalTip
+    addComment(survivalTipId: ID!, commentText: String!): SurvivalTip
+    removeSurvivalTip(survivalTipId: ID!): SurvivalTip
+    removeComment(survivalTipId: ID!, commentId: ID!): SurvivalTip
+    addChecklistItem(text: String!, priority: String!): ChecklistItem
+    updateChecklistPriority(id: ID!, priority: String!): ChecklistItem
+    toggleChecklistItem(id: ID!, completed: Boolean!): ChecklistItem
+    deleteChecklistItem(id: ID!): ChecklistItem
+    modifyPost(postId: ID!, title: String, bodyText: String): Post
+    removePost(postId: ID!): Post
+    removeCategory(categoryId: ID!): Category
+    removeUser(userId: ID!): User
+    modifyCategory(categoryId: ID!, name: String!): Category
+    assignCategoryToPost(postId: ID!, categoryId: ID!): Post
+    unassignCategoryFromPost(postId: ID!, categoryId: ID!): Post
+  }
 `;
 
 export default typeDefs;
