@@ -12,6 +12,7 @@ const Profile = () => {
   const [highPriorityCompleted, setHighPriorityCompleted] = useState(0);
   const [mediumPriorityCompleted, setMediumPriorityCompleted] = useState(0);
   const [lowPriorityCompleted, setLowPriorityCompleted] = useState(0);
+  const [displayName, setDisplayName] = useState('Survivor');
 
   // Fetch user data
   const { loading: userLoading, data: userData } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
@@ -27,6 +28,22 @@ const Profile = () => {
 
   const user = userData?.me || userData?.user || {};
   
+  // Set display name whenever user data changes
+  useEffect(() => {
+    if (user && user.username) {
+      setDisplayName(user.username);
+    } else if (Auth.loggedIn()) {
+      try {
+        const profile = Auth.getProfile();
+        if (profile && profile.data && profile.data.username) {
+          setDisplayName(profile.data.username);
+        }
+      } catch (err) {
+        console.error("Error getting profile from auth:", err);
+      }
+    }
+  }, [user]);
+
   // Calculate completed items whenever the checklist data changes
   useEffect(() => {
     if (checklistData?.checklist) {
@@ -67,6 +84,24 @@ const Profile = () => {
       console.log("Date joined:", user.dateJoined);
     }
   }, [user]);
+
+  useEffect(() => {
+    // Debug the user object to see what's available
+    console.log("Current user object:", user);
+    console.log("Username from user object:", user.username);
+    console.log("Raw userData:", userData);
+    
+    // Also check what's in the auth token
+    if (Auth.loggedIn()) {
+      try {
+        const profile = Auth.getProfile();
+        console.log("Auth profile:", profile);
+        console.log("Username from auth:", profile.data?.username);
+      } catch (err) {
+        console.error("Error logging auth profile:", err);
+      }
+    }
+  }, [user, userData]);
   
   const calculateHealthPercentage = () => {
     // Base health starts at 50%
@@ -184,7 +219,7 @@ const Profile = () => {
         {/* Profile Header */}
         <div className="text-center mb-4">
           <h2 className="text-light">
-            {userParam ? `${user.username}'s Survivor Profile` : 'Your Survivor Profile'}
+            {displayName ? `${displayName}'s Survivor Profile` : 'Survivor Profile'}
           </h2>
         </div>
         
@@ -226,7 +261,7 @@ const Profile = () => {
               ></div>
             </div>
             
-            <h3 className="text-light mb-2">{user.username}</h3>
+            <h3 className="text-light mb-2">{displayName}</h3>
             
             <div 
               style={{ 
