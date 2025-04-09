@@ -98,6 +98,13 @@ const typeDefs = `
     me: User
     checklist: [ChecklistItem]
     tipOfTheDay: TipOfTheDay
+    getAllPosts: [Post]
+    fetchAllPosts: [Post]
+    fetchPost(postId: ID!): Post
+    fetchUserPosts(userId: ID!): [Post]
+    fetchAllCategories: [Category]
+    fetchCategory(categoryId: ID!): Category
+    fetchPostsByCategory(categoryId: ID!): [Post]
   }
 
   type Mutation {
@@ -113,6 +120,13 @@ const typeDefs = `
     updateChecklistPriority(id: ID!, priority: String!): ChecklistItem
     toggleChecklistItem(id: ID!, completed: Boolean!): ChecklistItem
     deleteChecklistItem(id: ID!): ChecklistItem
+    modifyPost(postId: ID!, title: String, bodyText: String): Post
+    removePost(postId: ID!): Post
+    removeCategory(categoryId: ID!): Category
+    removeUser(userId: ID!): User
+    modifyCategory(categoryId: ID!, name: String!): Category
+    assignCategoryToPost(postId: ID!, categoryId: ID!): Post
+    unassignCategoryFromPost(postId: ID!, categoryId: ID!): Post
   }
 `;
 
