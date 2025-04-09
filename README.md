@@ -17,6 +17,10 @@ Brain Dead Buddies is a zombie survival checklist and tips forum designed to hel
 
 Brain Dead Buddies is a full-stack web application that combines a survival checklist, a blog for sharing survival stories, and a daily survival tip feature. Users can create accounts, log in, and interact with the community by adding tips, comments, and blog posts.
 
+## Live Site
+
+https://brain-dead-buddies.onrender.com
+
 ## Installation
 
 1. Clone the repository:
