@@ -1,10 +1,29 @@
 import { useParams } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
+import { useQuery, ApolloClient, InMemoryCache, HttpLink } from '@apollo/client';
+import { setContext } from '@apollo/client/link/context';
 import { QUERY_USER, QUERY_ME, QUERY_CHECKLIST } from '../utils/queries';
 import Auth from '../utils/auth';
 import zombieIcon from '../assets/scared_brain.png';
 import { useEffect, useState } from 'react';
 import SurvivalLifeBar from '../components/SurvivalLifeBar';
+
+// Add an Apollo context to include the token in the headers
+const authLink = setContext((_, { headers }) => {
+  const token = Auth.getToken();
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : '',
+    },
+  };
+});
+
+// Create Apollo client with authLink
+const httpLink = new HttpLink({ uri: '/graphql' });
+const client = new ApolloClient({
+  link: authLink.concat(httpLink),
+  cache: new InMemoryCache(),
+});
 
 const Profile = () => {
   const { username: userParam } = useParams();
