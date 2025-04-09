@@ -21,6 +21,10 @@ Brain Dead Buddies is a full-stack web application that combines a survival chec
 
 https://brain-dead-buddies.onrender.com
 
+## Image of Homepage
+![image](https://github.com/user-attachments/assets/b0ec8fdf-435a-4ded-84a4-90830166e948)
+
+
 ## Installation
 
 1. Clone the repository:
