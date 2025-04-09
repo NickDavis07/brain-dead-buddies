@@ -35,7 +35,7 @@ jobs:
           -H "Authorization: Bearer $RENDER_API_KEY" \
           -H "Content-Type: application/json" \
           -d '{"serviceId": "cvpdmk8dl3ps7380uqtg", "clearCache": true}' \
-          https://api.render.com/v1/services/<your-service-id>/deploys
+          https://api.render.com/v1/services/cvpdmk8dl3ps7380uqtg/deploys
 
       # Notify deployment success
       - name: Notify Deployment
