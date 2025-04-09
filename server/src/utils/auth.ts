@@ -28,7 +28,7 @@ export const authenticateToken = ({ req }: any) => {
     if (err instanceof Error) {
       console.log('Invalid token:', err.message); // More useful
     } else {
-      console.log('Invalid token:', err); // Fallback for non-Error types
+      console.log( err); // Fallback for non-Error types
     }
   }
 
