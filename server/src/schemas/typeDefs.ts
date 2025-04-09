@@ -53,6 +53,7 @@ const typeDefs = `
     user: User!
     createdAt: String!
     updatedAt: String!
+    categories: [Category]
   }
 
   type Category {
