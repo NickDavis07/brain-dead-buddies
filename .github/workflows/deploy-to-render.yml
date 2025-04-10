@@ -31,11 +31,20 @@ jobs:
         env:
           RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
         run: |
-          curl -X POST \
-          -H "Authorization: Bearer $RENDER_API_KEY" \
-          -H "Content-Type: application/json" \
-          -d '{"serviceId": "cvpdmk8dl3ps7380uqtg", "clearCache": true}' \
-          https://api.render.com/v1/services/cvpdmk8dl3ps7380uqtg/deploys
+          RESPONSE=$(curl -s -o response.json -w "%{http_code}" -X POST \
+            -H "Authorization: Bearer $RENDER_API_KEY" \
+            -H "Content-Type: application/json" \
+            -d '{"serviceId": "cvpdmk8dl3ps7380uqtg", "clearCache": true}' \
+            https://api.render.com/v1/services/cvpdmk8dl3ps7380uqtg/deploys)
+
+          if [ "$RESPONSE" -ne 200 ]; then
+            echo "Render deployment failed. Response code: $RESPONSE"
+            echo "Response body:"
+            cat response.json
+            exit 1
+          else
+            echo "Render deployment triggered successfully."
+          fi
 
       # Notify deployment success
       - name: Notify Deployment
