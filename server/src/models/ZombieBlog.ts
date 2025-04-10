@@ -5,9 +5,9 @@ interface IComment extends Document {
   createdAt: Date;
 }
 
-interface IThought extends Document {
-  thoughtText: string;
-  thoughtAuthor: string;
+interface IZombieBlog extends Document {
+  zombieblogText: string;
+  zombieblogAuthor: string;
   createdAt: Date;
   comments: IComment[];
 }
@@ -34,16 +34,16 @@ const commentSchema = new Schema<IComment>(
   }
 );
 
-const thoughtSchema = new Schema<IThought>(
+const zombieblogSchema = new Schema<IZombieBlog>(
   {
-    thoughtText: {
+    zombieblogText: {
       type: String,
       required: true,
       minlength: 1,
       maxlength: 280,
       trim: true,
     },
-    thoughtAuthor: {
+    zombieblogAuthor: {
       type: String,
       required: true,
       trim: true,
@@ -57,6 +57,6 @@ const thoughtSchema = new Schema<IThought>(
   }
 );
 
-const Thought = model<IThought>('Thought', thoughtSchema);
+const ZombieBlog = model<IZombieBlog>('ZombieBlog', zombieblogSchema);
 
-export default Thought;
+export default ZombieBlog;

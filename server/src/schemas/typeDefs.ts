@@ -26,10 +26,10 @@ const typeDefs = `
     date: String
   }
 
-  type Thought {
+  type ZombieBlog {
     _id: ID
-    thoughtText: String
-    thoughtAuthor: String
+    zombieblogText: String
+    zombieblogAuthor: String
     createdAt: String
     comments: [Comment]!
   }
@@ -94,8 +94,8 @@ const typeDefs = `
   }
 
   type Query {
-    thoughts: [Thought]!
-    thought(thoughtId: ID!): Thought
+    zombieblogs: [ZombieBlog]!
+    zombieblog(zombieblogId: ID!): ZombieBlog
     categories: [Category]!
     category(categoryId: ID!): Category
     posts: [Post]!
@@ -118,10 +118,10 @@ const typeDefs = `
   }
 
   type Mutation {
-  addThought(thoughtText: String!, thoughtAuthor: String!): Thought
-    addComment(thoughtId: ID!, commentText: String!): Thought
-    removeThought(thoughtId: ID!): Thought
-    removeComment(thoughtId: ID!, commentId: ID!): Thought
+    addZombieBlog(zombieblogText: String!, zombieblogAuthor: String!): ZombieBlog
+    addComment(zombieblogId: ID!, commentText: String!): ZombieBlog
+    removeZombieBlog(zombieblogId: ID!): ZombieBlog
+    removeComment(zombieblogId: ID!, commentId: ID!): ZombieBlog
     addCategory(input: CategoryInput!): Category
     addPost(input: PostInput!): Post
     addUser(input: UserInput!): Auth

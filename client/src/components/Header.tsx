@@ -148,7 +148,7 @@ const Header = () => {
                 <strong>Survival Checklist</strong>
               </Link>
               <Link className="btn btn-lg btn-secondary m-1" to="/blog"> {/* Adjusted button size */}
-                <strong>Blog</strong>
+                <strong>Zombie Blog</strong>
               </Link>
               <button className="btn btn-lg btn-light m-1" onClick={logout}> {/* Adjusted button size */}
                 <strong>Logout</strong>

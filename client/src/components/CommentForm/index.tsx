@@ -3,7 +3,7 @@ import { useMutation } from '@apollo/client';
 
 import { ADD_COMMENT } from '../../utils/mutations';
 
-const CommentForm = ({ thoughtId }: any) => {
+const CommentForm = ({ zombieblogId }: any) => {
   const [commentText, setCommentText] = useState('');
   const [characterCount, setCharacterCount] = useState(0);
 
@@ -17,7 +17,7 @@ const CommentForm = ({ thoughtId }: any) => {
       // We call the addComment function when the comment form submits, and give the variables argument needed to complete the query
       await addComment({
         variables: {
-          thoughtId, commentText
+          zombieblogId, commentText
         }
       });
 
@@ -38,7 +38,7 @@ const CommentForm = ({ thoughtId }: any) => {
 
   return (
     <div>
-      <h4>What are your thoughts on this thought?</h4>
+      <h4>What are your thoughts on this zombieblog?</h4>
       <p
         className={`m-0 ${
           characterCount === 280 || error ? 'text-danger' : ''

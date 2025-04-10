@@ -15,23 +15,23 @@ export const QUERY_USER = gql`
   }
 `;
 
-export const QUERY_THOUGHTS = gql`
-  query getThoughts {
-    thoughts {
+export const QUERY_ZOMBIEBLOGS = gql`
+  query getZombieBlogs {
+    zombieblogs {
       _id
-      thoughtText
-      thoughtAuthor
+      zombieblogText
+      zombieblogAuthor
       createdAt
     }
   }
 `;
 
-export const QUERY_SINGLE_THOUGHT = gql`
-  query getSingleThought($thoughtId: ID!) {
-    thought(thoughtId: $thoughtId) {
+export const QUERY_SINGLE_ZOMBIEBLOG = gql`
+  query getSingleZombieBlog($zombieblogId: ID!) {
+    zombieblog(zombieblogId: $zombieblogId) {
       _id
-      thoughtText
-      thoughtAuthor
+      zombieblogText
+      zombieblogAuthor
       createdAt
       comments {
         _id

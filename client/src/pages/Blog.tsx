@@ -1,13 +1,13 @@
 import { useQuery } from '@apollo/client';
 
-import ThoughtList from '../components/ThoughtList/index.tsx';
-import ThoughtForm from '../components/ThoughtForm/index.tsx';
+import ZombieBlogList from '../components/ZombieBlogList/index.tsx';
+import ZombieBlogForm from '../components/ZombieBlogForm/index.tsx';
 
-import { QUERY_THOUGHTS } from '../utils/queries.ts';
+import { QUERY_ZOMBIEBLOGS } from '../utils/queries.ts';
 
 const Home = () => {
-  const { loading, data } = useQuery(QUERY_THOUGHTS);
-  const thoughts = data?.thoughts || [];
+  const { loading, data } = useQuery(QUERY_ZOMBIEBLOGS);
+  const zombieblogs = data?.zombieblogs || [];
 
   return (
     <div className="container mx-auto p-4" style={{ maxWidth: '800px' }}>
@@ -32,7 +32,7 @@ const Home = () => {
                 '2px 2px 0px black, -2px -2px 0px black, 2px -2px 0px black, -2px 2px 0px black',
             }}
           >
-            Blog
+            Zombie Blog
           </h1>
         </div>
 
@@ -45,15 +45,15 @@ const Home = () => {
           }}
         >
           <div className="mb-4">
-            <ThoughtForm />
+            <ZombieBlogForm />
           </div>
           <div>
             {loading ? (
               <div>Loading...</div>
             ) : (
-              <ThoughtList
-                thoughts={thoughts}
-                title="Some Feed for Thought(s)..."
+              <ZombieBlogList
+                zombieblogs={zombieblogs}
+                title="Unleash Your Ideas in the Zombie Blog Feed!"
               />
             )}
           </div>

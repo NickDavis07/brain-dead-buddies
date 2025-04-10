@@ -1,30 +1,28 @@
 // Import the `useParams()` hook from React Router
 import { useParams } from 'react-router-dom';
-import { FC } from 'react';
 import { useQuery } from '@apollo/client';
 
 import CommentList from '../components/CommentList/index.tsx';
 import CommentForm from '../components/CommentForm/index.tsx';
 
-import { QUERY_SINGLE_THOUGHT } from '../utils/queries.ts';
-interface Thought {
+import { QUERY_SINGLE_ZOMBIEBLOG } from '../utils/queries.ts';
+
+interface ZombieBlog {
   _id: string;
   createdAt: string;
-  thoughtText: string;
-  thoughtAuthor: string;
+  zombieblogText: string;
+  zombieblogAuthor: string;
   comments: Array<{ _id: string; commentText: string; createdAt: string; username: string }>;
 }
 
-const SingleThought: FC = () => {
-  // Use `useParams()` to retrieve value of the route parameter `:profileId`
-  const { thoughtId } = useParams();
+const SingleZombieBlog = () => {
+  const { zombieblogId } = useParams();
 
-  const { loading, data } = useQuery(QUERY_SINGLE_THOUGHT, {
-    // Pass the `thoughtId` URL parameter into query to retrieve this thought's data
-    variables: { thoughtId: thoughtId },
+  const { loading, data } = useQuery(QUERY_SINGLE_ZOMBIEBLOG, {
+    variables: { zombieblogId: zombieblogId },
   });
 
-  const thought: Thought = data?.thought || ({} as Thought);
+  const zombieblog: ZombieBlog = data?.zombieblog || ({} as ZombieBlog);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -32,9 +30,9 @@ const SingleThought: FC = () => {
   return (
     <div className="my-3">
       <h3 className="card-header bg-dark text-light p-2 m-0">
-        {thought.thoughtAuthor} <br />
+        {zombieblog.zombieblogAuthor} <br />
         <span style={{ fontSize: '1rem' }}>
-          had this thought on {new Date(Number(thought.createdAt)).toLocaleString()}
+          had this zombieblog on {new Date(Number(zombieblog.createdAt)).toLocaleString()}
         </span>
       </h3>
       <div className="bg-light py-4">
@@ -47,18 +45,18 @@ const SingleThought: FC = () => {
             lineHeight: '1.5',
           }}
         >
-          {thought.thoughtText}
+          {zombieblog.zombieblogText}
         </blockquote>
       </div>
 
       <div className="my-5">
-        <CommentList comments={thought.comments} />
+        <CommentList comments={zombieblog.comments} />
       </div>
       <div className="m-3 p-4" style={{ border: '1px dotted #1a1a1a' }}>
-        <CommentForm thoughtId={thought._id} />
+        <CommentForm zombieblogId={zombieblog._id} />
       </div>
     </div>
   );
 };
 
-export default SingleThought;
+export default SingleZombieBlog;
