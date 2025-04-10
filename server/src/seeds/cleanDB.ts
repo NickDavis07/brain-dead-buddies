@@ -1,4 +1,4 @@
-import { SurvivalTip, User, TipOfTheDay, } from '../models/index.js';
+import Thought, { SurvivalTip, User, TipOfTheDay, } from '../models/index.js';
 import process from 'process';
 
 const cleanDB = async (): Promise<void> => {
@@ -13,6 +13,9 @@ const cleanDB = async (): Promise<void> => {
 
     await User.deleteMany({});
     console.log('User collection cleaned.');
+
+    await Thought.deleteMany({});
+    console.log('Thought collection cleaned.');
 
   } catch (err) {
     console.error('Error cleaning collections:❌', err);

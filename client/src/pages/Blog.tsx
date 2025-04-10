@@ -1,41 +1,36 @@
-
 import { useQuery } from '@apollo/client';
-import { GET_ALL_POSTS } from '../utils/blogQueries';
-import CommentForm from '../components/CommentForm';
-import CommentList from '../components/CommentList';
 
+import ThoughtList from '../components/ThoughtList/index.tsx';
+import ThoughtForm from '../components/ThoughtForm/index.tsx';
 
+import { QUERY_THOUGHTS } from '../utils/queries.ts';
 
-const Blog = () => {
-  const { loading, data } = useQuery(GET_ALL_POSTS);
-  const posts = data?.getAllPosts || [];
+const Home = () => {
+  const { loading, data } = useQuery(QUERY_THOUGHTS);
+  const thoughts = data?.thoughts || [];
+
   return (
     <main>
-      <div className="zombie-blog-container p-4" style={{ 
-        backgroundColor: 'rgba(0, 0, 0, 0.7)',
-        minHeight: 'calc(100vh - 200px)'
-      }}>
-      
-        <h2 className="text-center text-red-500 mb-4" style={{ 
-          textShadow: '2px 2px 4px #000',
-          fontSize: '2.5rem'
-        }}>
-          Survival Stories
-        </h2>
-        <CommentForm />
+      <div className="flex-row justify-center">
+        <div
+          className="col-12 col-md-10 mb-3 p-3"
+          style={{ border: '1px dotted #1a1a1a' }}
+        >
+          <ThoughtForm />
+        </div>
         <div className="col-12 col-md-8 mb-3">
           {loading ? (
             <div>Loading...</div>
           ) : (
-            <CommentList
-            comments={posts.comments}
-            />  
-            )}
-          </div>
+            <ThoughtList
+              thoughts={thoughts}
+              title="Some Feed for Thought(s)..."
+            />
+          )}
         </div>
-      </main>
-    );
+      </div>
+    </main>
+  );
 };
 
-export default Blog;
-
+export default Home;
