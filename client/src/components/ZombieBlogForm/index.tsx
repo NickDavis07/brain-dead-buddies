@@ -49,10 +49,10 @@ const ZombieBlogForm = () => {
 
   return (
     <div>
-      <h3>What's on your techy mind?</h3>
+      <h3 className="text-white">What's your survival story today?</h3>
 
       <p
-        className={`m-0 ${
+        className={`m-0 text-white ${
           characterCount === 280 || error ? 'text-danger' : ''
         }`}
       >
