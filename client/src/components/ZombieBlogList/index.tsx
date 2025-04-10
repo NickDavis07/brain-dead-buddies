@@ -1,46 +1,46 @@
 import { Link } from 'react-router-dom';
 import React from 'react';
 
-interface Thought {
+interface ZombieBlog {
   _id: string;
-  thoughtText: string;
-  thoughtAuthor: string;
+  zombieblogText: string;
+  zombieblogAuthor: string;
   createdAt: string;
 }
 
-interface ThoughtListProps {
-  thoughts: Thought[];
+interface ZombieBlogListProps {
+  zombieblogs: ZombieBlog[];
   title: string;
 }
 
-const ThoughtList: React.FC<ThoughtListProps> = ({ thoughts, title }) => {
-  if (!thoughts.length) {
-    return <h3 className="text-center text-red-600 font-bold">No Thoughts Yet</h3>;
+const ZombieBlogList: React.FC<ZombieBlogListProps> = ({ zombieblogs, title }) => {
+  if (!zombieblogs.length) {
+    return <h3 className="text-center text-red-600 font-bold">No ZombieBlogs Yet</h3>;
   }
 
   return (
     <div>
       <h3 className="text-xl font-bold text-center text-red-600 mb-4">{title}</h3>
-      {thoughts?.map((thought) => (
+      {zombieblogs?.map((zombieblog) => (
         <div
-          key={thought._id}
+          key={zombieblog._id}
           className="mb-4 p-4 rounded-lg border-2 border-green-600 bg-gray-800 text-white"
         >
           <h4 className="text-lg font-bold text-green-400 mb-2">
-            {thought.thoughtAuthor}
+            {zombieblog.zombieblogAuthor}
             <br />
             <span className="text-sm text-gray-400">
-              had this thought on {new Date(thought.createdAt).toLocaleString()}
+              had this zombieblog on {new Date(zombieblog.createdAt).toLocaleString()}
             </span>
           </h4>
           <div className="mb-2">
-            <p>{thought.thoughtText}</p>
+            <p>{zombieblog.zombieblogText}</p>
           </div>
           <Link
             className="block text-center bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
-            to={`/thoughts/${thought._id}`}
+            to={`/zombieblogs/${zombieblog._id}`}
           >
-            Join the discussion on this thought.
+            Join the discussion on this zombieblog.
           </Link>
         </div>
       ))}
@@ -48,4 +48,4 @@ const ThoughtList: React.FC<ThoughtListProps> = ({ thoughts, title }) => {
   );
 };
 
-export default ThoughtList;
+export default ZombieBlogList;

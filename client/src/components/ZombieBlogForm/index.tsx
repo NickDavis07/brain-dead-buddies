@@ -1,42 +1,35 @@
 import { type ChangeEvent, type FormEvent, useState } from 'react';
 import { useMutation } from '@apollo/client';
 
-import { ADD_THOUGHT } from '../../utils/mutations';
-import { QUERY_THOUGHTS } from '../../utils/queries';
+import { ADD_ZOMBIEBLOG } from '../../utils/mutations';
+import { QUERY_ZOMBIEBLOGS } from '../../utils/queries';
 
-const ThoughtForm = () => {
+const ZombieBlogForm = () => {
   const [formState, setFormState] = useState({
-    thoughtText: '',
-    thoughtAuthor: '',
+    zombieblogText: '',
+    zombieblogAuthor: '',
   });
   const [characterCount, setCharacterCount] = useState(0);
 
-  // Set up the mutation with error handling support.
-  // The useMutation hook allows providing the refetchQueries option to refetch specific queries after a mutation
-  // This is useful to ensure that new data is displayed automatically. Otherwise, we would need to manually update the list at a higher component level, modify state, or implement custom caching behavior
-  const [addThought, { error }] = useMutation
-  (ADD_THOUGHT, {
+  const [addZombieBlog, { error }] = useMutation(ADD_ZOMBIEBLOG, {
     refetchQueries: [
-      QUERY_THOUGHTS,
-      'getThoughts'
+      QUERY_ZOMBIEBLOGS,
+      'getZombieBlogs'
     ]
   });
 
   const handleFormSubmit = async (event: FormEvent) => {
     event.preventDefault();
 
-    // Perform the mutation and pass the form data object as arguments when the form is submitted.
-    // Make sure that the object fields match the defined parameters in the ADD_THOUGHT mutation.
     try {
-      await addThought({
+      await addZombieBlog({
         variables: { ...formState },
       });
 
-      // Instead of refreshing the page, the query dispatched at the src/pages/Home.jsx level is refetched, allowing the updated data to be passed down to the ThoughtList component for display. Then, we can directly clear the form state.
       setCharacterCount(0);
       setFormState({
-        thoughtText: '',
-        thoughtAuthor: ''
+        zombieblogText: '',
+        zombieblogAuthor: ''
       });
     } catch (err) {
       console.error(err);
@@ -46,10 +39,10 @@ const ThoughtForm = () => {
   const handleChange = (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
     const { name, value } = event.target;
 
-    if (name === 'thoughtText' && value.length <= 280) {
+    if (name === 'zombieblogText' && value.length <= 280) {
       setFormState({ ...formState, [name]: value });
       setCharacterCount(value.length);
-    } else if (name !== 'thoughtText') {
+    } else if (name !== 'zombieblogText') {
       setFormState({ ...formState, [name]: value });
     }
   };
@@ -72,26 +65,25 @@ const ThoughtForm = () => {
       >
         <div className="col-12">
           <textarea
-            name="thoughtText"
-            placeholder="Here's a new thought..."
-            value={formState.thoughtText}
+            name="zombieblogText"
+            placeholder="Here's a new zombieblog..."
+            value={formState.zombieblogText}
             className="form-input w-100"
             onChange={handleChange}
           />
         </div>
         <div className="col-12 col-lg-9">
           <input
-            name="thoughtAuthor"
-            placeholder="Add your name to get credit for the thought..."
-            value={formState.thoughtAuthor}
+            name="zombieblogAuthor"
+            placeholder="Add your name to get credit for the zombieblog..."
+            value={formState.zombieblogAuthor}
             className="form-input w-100"
             onChange={handleChange}
           />
         </div>
-
         <div className="col-12 col-lg-3">
           <button className="btn btn-primary btn-block py-3" type="submit">
-            Add Thought
+            Add ZombieBlog
           </button>
         </div>
         {error && (
@@ -104,4 +96,4 @@ const ThoughtForm = () => {
   );
 };
 
-export default ThoughtForm;
+export default ZombieBlogForm;

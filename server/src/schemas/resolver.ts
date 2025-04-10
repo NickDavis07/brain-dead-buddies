@@ -1,7 +1,7 @@
 import { SurvivalTip, User, TipOfTheDay, Post, Category } from '../models/index.js';
 import { signToken, AuthenticationError } from '../utils/auth.js';
 import ChecklistItem from '../models/SurvivalChecklist.js';
-import Thought from '../models/index.js';
+import ZombieBlog from '../models/index.js';
 
 // Define types for the arguments
 interface AddUserArgs {
@@ -174,11 +174,11 @@ const resolvers = {
                 });
             return category?.posts || [];
         },
-        thoughts: async () => {
-            return await Thought.find().sort({ createdAt: -1 });
+        zombieblogs: async () => {
+            return await ZombieBlog.find().sort({ createdAt: -1 });
         },
-        thought: async (_parent: any, { thoughtId }: { thoughtId: string }) => {
-            return await Thought.findOne({ _id: thoughtId });
+        zombieblog: async (_parent: any, { zombieblogId }: { zombieblogId: string }) => {
+            return await ZombieBlog.findOne({ _id: zombieblogId });
         },
     },
     Mutation: {
@@ -406,11 +406,11 @@ const resolvers = {
                 .populate('user')
                 .populate('categories');
         },
-        addThought: async (_parent: any, { thoughtText, thoughtAuthor }: { thoughtText: string; thoughtAuthor: string }) => {
-            return await Thought.create({ thoughtText, thoughtAuthor });
+        addZombieBlog: async (_parent: any, { zombieblogText, zombieblogAuthor }: { zombieblogText: string; zombieblogAuthor: string }) => {
+            return await ZombieBlog.create({ zombieblogText, zombieblogAuthor });
         },
-        removeThought: async (_parent: any, { thoughtId }: { thoughtId: string }) => {
-            return await Thought.findOneAndDelete({ _id: thoughtId });
+        removeZombieBlog: async (_parent: any, { zombieblogId }: { zombieblogId: string }) => {
+            return await ZombieBlog.findOneAndDelete({ _id: zombieblogId });
         },
     },
 };

@@ -4,16 +4,16 @@ import { useQuery } from '@apollo/client';
 import CommentList from '../components/CommentList.tsx';
 import CommentForm from '../components/CommentForm.tsx';
 
-import { QUERY_SINGLE_THOUGHT } from '../utils/queries.ts';
+import { QUERY_SINGLE_ZOMBIEBLOG } from '../utils/queries.ts';
 
-const SingleThought = () => {
-  const { thoughtId } = useParams();
+const SingleZombieBlog = () => {
+  const { zombieblogId } = useParams();
 
-  const { loading, data } = useQuery(QUERY_SINGLE_THOUGHT, {
-    variables: { thoughtId: thoughtId },
+  const { loading, data } = useQuery(QUERY_SINGLE_ZOMBIEBLOG, {
+    variables: { zombieblogId: zombieblogId },
   });
 
-  const thought = data?.thought || {};
+  const zombieblog = data?.zombieblog || {};
 
   if (loading) {
     return <div>Loading...</div>;
@@ -21,9 +21,9 @@ const SingleThought = () => {
   return (
     <div className="my-3">
       <h3 className="card-header bg-dark text-light p-2 m-0">
-        {thought.thoughtAuthor} <br />
+        {zombieblog.zombieblogAuthor} <br />
         <span style={{ fontSize: '1rem' }}>
-          had this thought on {new Date(Number(thought.createdAt)).toLocaleString()}
+          had this zombieblog on {new Date(Number(zombieblog.createdAt)).toLocaleString()}
         </span>
       </h3>
       <div className="bg-light py-4">
@@ -36,18 +36,18 @@ const SingleThought = () => {
             lineHeight: '1.5',
           }}
         >
-          {thought.thoughtText}
+          {zombieblog.zombieblogText}
         </blockquote>
       </div>
 
       <div className="my-5">
-        <CommentList comments={thought.comments} />
+        <CommentList comments={zombieblog.comments} />
       </div>
       <div className="m-3 p-4" style={{ border: '1px dotted #1a1a1a' }}>
-        <CommentForm thoughtId={thought._id} />
+        <CommentForm zombieblogId={zombieblog._id} />
       </div>
     </div>
   );
 };
 
-export default SingleThought;
+export default SingleZombieBlog;

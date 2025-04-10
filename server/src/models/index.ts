@@ -6,5 +6,5 @@ import Post from './Post.js';
 export { SurvivalTip, User, TipOfTheDay, Category, Post };
 
 // Test for Blog Page Testing
-import Thought from './Thought.js';
-export default Thought;
+import ZombieBlog from './ZombieBlog.js';
+export default ZombieBlog;

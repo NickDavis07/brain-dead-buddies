@@ -24,12 +24,12 @@ export const ADD_USER = gql`
 }
 `;
 
-export const ADD_THOUGHT = gql`
-  mutation AddThought($input: ThoughtInput!) {
-    addThought(input: $input) {
+export const ADD_ZOMBIEBLOG = gql`
+  mutation AddZombieBlog($input: ZombieBlogInput!) {
+    addZombieBlog(input: $input) {
       _id
-      thoughtText
-      thoughtAuthor
+      zombieblogText
+      zombieblogAuthor
       createdAt
       comments {
         _id
@@ -40,11 +40,11 @@ export const ADD_THOUGHT = gql`
 `;
 
 export const ADD_COMMENT = gql`
-  mutation addComment($thoughtId: ID!, $commentText: String!) {
-    addComment(thoughtId: $thoughtId, commentText: $commentText) {
+  mutation addComment($zombieblogId: ID!, $commentText: String!) {
+    addComment(zombieblogId: $zombieblogId, commentText: $commentText) {
       _id
-      thoughtText
-      thoughtAuthor
+      zombieblogText
+      zombieblogAuthor
       createdAt
       comments {
         _id
