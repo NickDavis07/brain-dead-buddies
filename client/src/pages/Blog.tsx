@@ -10,26 +10,56 @@ const Home = () => {
   const thoughts = data?.thoughts || [];
 
   return (
-    <main>
-      <div className="flex-row justify-center">
+    <div className="container mx-auto p-4" style={{ maxWidth: '800px' }}>
+      <div
+        style={{
+          backgroundColor: 'rgba(0, 0, 0, 0.5)',
+          borderRadius: '15px',
+          border: '2px solid #3d9a40',
+        }}
+      >
         <div
-          className="col-12 col-md-10 mb-3 p-3"
-          style={{ border: '1px dotted #1a1a1a' }}
+          className="text-light p-3 bg-gray-900"
+          style={{
+            borderTopLeftRadius: '13px',
+            borderTopRightRadius: '13px',
+          }}
         >
-          <ThoughtForm />
+          <h1
+            className="text-2xl font-bold text-center text-red-600"
+            style={{
+              textShadow:
+                '2px 2px 0px black, -2px -2px 0px black, 2px -2px 0px black, -2px 2px 0px black',
+            }}
+          >
+            Blog
+          </h1>
         </div>
-        <div className="col-12 col-md-8 mb-3">
-          {loading ? (
-            <div>Loading...</div>
-          ) : (
-            <ThoughtList
-              thoughts={thoughts}
-              title="Some Feed for Thought(s)..."
-            />
-          )}
+
+        <div
+          className="p-4"
+          style={{
+            backgroundColor: 'rgba(0, 0, 0, 0.3)',
+            borderBottomLeftRadius: '13px',
+            borderBottomRightRadius: '13px',
+          }}
+        >
+          <div className="mb-4">
+            <ThoughtForm />
+          </div>
+          <div>
+            {loading ? (
+              <div>Loading...</div>
+            ) : (
+              <ThoughtList
+                thoughts={thoughts}
+                title="Some Feed for Thought(s)..."
+              />
+            )}
+          </div>
         </div>
       </div>
-    </main>
+    </div>
   );
 };
 
