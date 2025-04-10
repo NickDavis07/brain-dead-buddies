@@ -64,7 +64,7 @@ const SingleZombieBlog = () => {
           }}
         >
           <blockquote
-            className="p-4"
+            className="p-4 text-white"
             style={{
               fontSize: '1.5rem',
               fontStyle: 'italic',
