@@ -103,36 +103,27 @@ const resolvers = {
         survivalTipsByCategory: async (_parent: any, { category }: CategoryArgs) => {
             return await SurvivalTip.find({ category }).sort({ createdAt: -1 });
         },
-        // Query to get the authenticated user's information
         me: async (_parent: any, _args: any, context: any) => {
-            // If the user is authenticated, find and return the user's information along with their survivalTip
             if (context.user) {
                 return User.findOne({ _id: context.user._id }).populate('survivalTips');
             }
-            // If the user is not authenticated, throw an AuthenticationError
             throw new AuthenticationError('Could not authenticate user.');
         },
         checklist: async (_parent: any, _args: any, context: any) => {
             if (!context.user) {
                 throw new AuthenticationError('You need to be logged in!');
             }
-
-            // Fetch checklist items for the logged-in user
             return await ChecklistItem.find({ userId: context.user._id });
         },
         tipOfTheDay: async () => {
-            // Get today's date at 00:00:00
             const today = new Date();
             today.setHours(0, 0, 0, 0);
 
-            // Check if we already have a tip for today
             let todaysTip = await TipOfTheDay.findOne({
                 date: { $gte: today, $lt: new Date(today.getTime() + 24 * 60 * 60 * 1000) }
             });
 
-            // If no tip exists for today, create one
             if (!todaysTip) {
-                // Get a random tip from SurvivalTips collection
                 const tipsCount = await SurvivalTip.countDocuments();
                 const randomIndex = Math.floor(Math.random() * tipsCount);
                 const randomTip = await SurvivalTip.findOne().skip(randomIndex);
@@ -153,6 +144,7 @@ const resolvers = {
             return await Post.find()
                 .sort({ createdAt: -1 })
                 .populate('user')
+                .populate('categories');
         },
         fetchPost: async (_parent: any, { postId }: PostArgs) => {
             return await Post.findById(postId)
@@ -184,37 +176,24 @@ const resolvers = {
     },
     Mutation: {
         addUser: async (_parent: any, { input }: AddUserArgs) => {
-            // Create a new user with the provided username, email, and password
             const user = await User.create({ ...input });
-
-            // Sign a token with the user's information
             const token = signToken(user.username, user.email, user._id);
-
-            // Return the token and the user
             return { token, user };
         },
-
         login: async (_parent: any, { email, password }: LoginUserArgs) => {
-            // Find a user with the provided email
             const user = await User.findOne({ email });
 
-            // If no user is found, throw an AuthenticationError
             if (!user) {
                 throw new AuthenticationError('Could not authenticate user.');
             }
 
-            // Check if the provided password is correct
             const correctPw = await user.isCorrectPassword(password);
 
-            // If the password is incorrect, throw an AuthenticationError
             if (!correctPw) {
                 throw new AuthenticationError('Could not authenticate user.');
             }
 
-            // Sign a token with the user's information
             const token = signToken(user.username, user.email, user._id);
-
-            // Return the token and the user
             return { token, user };
         },
         addSurvivalTip: async (_parent: any, { input }: AddSurvivalTipArgs, context: any) => {
@@ -302,7 +281,6 @@ const resolvers = {
                 throw new AuthenticationError('You need to be logged in!');
             }
 
-            // Update the completed status of the checklist item
             const updatedItem = await ChecklistItem.findOneAndUpdate(
                 { _id: id, userId: context.user._id },
                 { completed },
@@ -320,10 +298,9 @@ const resolvers = {
                 throw new AuthenticationError('You need to be logged in!');
             }
 
-            // Find and delete the checklist item
             const deletedItem = await ChecklistItem.findOneAndDelete({
                 _id: id,
-                userId: context.user._id, // Ensure the item belongs to the logged-in user
+                userId: context.user._id,
             });
 
             if (!deletedItem) {
@@ -350,9 +327,8 @@ const resolvers = {
             return updatedItem;
         },
         addPost: async (_parent: any, { input }: AddPostArgs) => {
-            console.log('Adding post:', input);
             const post = await Post.create({ title: input.title, bodyText: input.bodyText, user: input.user });
-            return post;
+            return post.populate('user');
         },
         modifyPost: async (_parent: any, { postId, title, bodyText }: ModifyPostArgs) => {
             return await Post.findByIdAndUpdate(
