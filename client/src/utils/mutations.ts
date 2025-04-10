@@ -25,8 +25,8 @@ export const ADD_USER = gql`
 `;
 
 export const ADD_ZOMBIEBLOG = gql`
-  mutation AddZombieBlog($input: ZombieBlogInput!) {
-    addZombieBlog(input: $input) {
+  mutation AddZombieBlog($zombieblogText: String!, $zombieblogAuthor: String!) {
+    addZombieBlog(zombieblogText: $zombieblogText, zombieblogAuthor: $zombieblogAuthor) {
       _id
       zombieblogText
       zombieblogAuthor
