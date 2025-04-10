@@ -7,30 +7,23 @@ import CommentList from '../components/CommentList/index.tsx';
 import CommentForm from '../components/CommentForm/index.tsx';
 
 import { QUERY_SINGLE_ZOMBIEBLOG } from '../utils/queries.ts';
-import { QUERY_SINGLE_THOUGHT } from '../utils/queries.ts';
-interface Thought {
+
+interface ZombieBlog {
   _id: string;
   createdAt: string;
-  thoughtText: string;
-  thoughtAuthor: string;
+  zombieblogText: string;
+  zombieblogAuthor: string;
   comments: Array<{ _id: string; commentText: string; createdAt: string; username: string }>;
 }
 
 const SingleZombieBlog = () => {
   const { zombieblogId } = useParams();
-const SingleThought: FC = () => {
-  // Use `useParams()` to retrieve value of the route parameter `:profileId`
-  const { thoughtId } = useParams();
 
   const { loading, data } = useQuery(QUERY_SINGLE_ZOMBIEBLOG, {
     variables: { zombieblogId: zombieblogId },
-  const { loading, data } = useQuery(QUERY_SINGLE_THOUGHT, {
-    // Pass the `thoughtId` URL parameter into query to retrieve this thought's data
-    variables: { thoughtId: thoughtId },
   });
 
-  const zombieblog = data?.zombieblog || {};
-  const thought: Thought = data?.thought || ({} as Thought);
+  const zombieblog: ZombieBlog = data?.zombieblog || ({} as ZombieBlog);
 
   if (loading) {
     return <div>Loading...</div>;
