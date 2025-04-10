@@ -18,24 +18,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Install dependencies
-      - name: Install dependencies
-        run: npm install
-
-      # Build the project
-      - name: Build the project
-        run: npm run build
-
       # Deploy to Render
       - name: Deploy to Render
-        env:
-          RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
         run: |
           RESPONSE=$(curl -s -o response.json -w "%{http_code}" -X POST \
-            -H "Authorization: Bearer $RENDER_API_KEY" \
-            -H "Content-Type: application/json" \
-            -d '{"serviceId": "cvpdmk8dl3ps7380uqtg", "clearCache": true}' \
-            https://api.render.com/v1/services/cvpdmk8dl3ps7380uqtg/deploys)
+            https://api.render.com/deploy/srv-cvpdmk8dl3ps7380uqtg?key=-D7KtupNAaU)
 
           if [ "$RESPONSE" -ne 200 ]; then
             echo "Render deployment failed. Response code: $RESPONSE"
