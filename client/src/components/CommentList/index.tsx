@@ -12,20 +12,62 @@ interface CommentListProps {
 const CommentList: React.FC<CommentListProps> = ({ comments = [] }) => {
   console.log(comments);
   if (!comments.length) {
-    return <h3>No Comments Yet</h3>;
+    return (
+      <h3
+        className="text-center text-red-600"
+        style={{
+          backgroundColor: 'rgba(0, 0, 0, 0.5)',
+          padding: '10px',
+          borderRadius: '10px',
+          border: '2px solid #3d9a40',
+          textShadow: '2px 2px 0px black, -2px -2px 0px black',
+        }}
+      >
+        No Comments Yet
+      </h3>
+    );
   }
 
   return (
-    <>
-      <h3
-        className="p-5 display-inline-block"
-        style={{ borderBottom: '1px dotted #1a1a1a' }}
+    <div
+      className="container mx-auto p-4"
+      style={{
+        maxWidth: '800px',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        borderRadius: '15px',
+        border: '2px solid #3d9a40',
+      }}
+    >
+      <div
+        className="text-light p-3 bg-gray-900"
+        style={{
+          borderTopLeftRadius: '13px',
+          borderTopRightRadius: '13px',
+        }}
       >
-        Comments
-      </h3>
-      <div className="flex-row my-4">
-        {comments?.map((comment) => (
-            <div key={comment._id} className="col-12 mb-3 pb-3">
+        <h3
+          className="text-2xl font-bold text-center text-red-600"
+          style={{
+            textShadow: '2px 2px 0px black, -2px -2px 0px black, 2px -2px 0px black, -2px 2px 0px black',
+          }}
+        >
+          Comments
+        </h3>
+      </div>
+      <div
+        className="p-4"
+        style={{
+          backgroundColor: 'rgba(0, 0, 0, 0.3)',
+          borderBottomLeftRadius: '13px',
+          borderBottomRightRadius: '13px',
+        }}
+      >
+        <div className="flex-row my-4">
+          {comments?.map((comment, index) => (
+            <div
+              key={comment._id || `comment-${index}`} // Fallback to index if _id is null or undefined
+              className="col-12 mb-3 pb-3"
+            >
               <div className="p-3 bg-dark text-light">
                 <h5 className="card-header">
                   An anonymous user commented{' '}
@@ -37,8 +79,9 @@ const CommentList: React.FC<CommentListProps> = ({ comments = [] }) => {
               </div>
             </div>
           ))}
+        </div>
       </div>
-    </>
+    </div>
   );
 };
 

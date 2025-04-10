@@ -7,20 +7,18 @@ const CommentForm = ({ zombieblogId }: any) => {
   const [commentText, setCommentText] = useState('');
   const [characterCount, setCharacterCount] = useState(0);
 
-  // The useMutation hook returns an array, which includes our addComment function
-  
   const [addComment, { error }] = useMutation(ADD_COMMENT);
 
   const handleFormSubmit = async (event: FormEvent) => {
-    event.preventDefault()
+    event.preventDefault();
     console.log('zombieblogId', zombieblogId);
 
     try {
-      // We call the addComment function when the comment form submits, and give the variables argument needed to complete the query
       await addComment({
         variables: {
-          zombieblogId, commentText
-        }
+          zombieblogId,
+          commentText,
+        },
       });
 
       setCommentText('');
@@ -39,37 +37,89 @@ const CommentForm = ({ zombieblogId }: any) => {
   };
 
   return (
-    <div>
-      <h4>What are your thoughts on this zombieblog?</h4>
-      <p
-        className={`m-0 ${
-          characterCount === 280 || error ? 'text-danger' : ''
-        }`}
+    <div
+      className="container mx-auto p-4"
+      style={{
+        maxWidth: '800px',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        borderRadius: '15px',
+        border: '2px solid #3d9a40',
+      }}
+    >
+      <div
+        className="text-light p-3 bg-gray-900"
+        style={{
+          borderTopLeftRadius: '13px',
+          borderTopRightRadius: '13px',
+        }}
       >
-        Character Count: {characterCount}/280
-        {error && <span className="ml-2">Something went wrong...</span>}
-      </p>
-      <form
-        className="flex-row justify-center justify-space-between-md align-center"
-        onSubmit={handleFormSubmit}
+        <h4
+          className="text-center text-red-600"
+          style={{
+            textShadow:
+              '2px 2px 0px black, -2px -2px 0px black, 2px -2px 0px black, -2px 2px 0px black',
+          }}
+        >
+          What are your thoughts on this zombieblog?
+        </h4>
+      </div>
+      <div
+        className="p-4"
+        style={{
+          backgroundColor: 'rgba(0, 0, 0, 0.3)',
+          borderBottomLeftRadius: '13px',
+          borderBottomRightRadius: '13px',
+        }}
       >
-        <div className="col-12 col-lg-9">
+        <p
+          className={`m-0 ${
+            characterCount === 280 || error ? 'text-red-600' : 'text-light'
+          }`}
+        >
+          Character Count: {characterCount}/280
+          {error && (
+            <span className="ml-2 text-red-600">Something went wrong...</span>
+          )}
+        </p>
+        <form
+          className="flex flex-col space-y-4"
+          onSubmit={handleFormSubmit}
+        >
           <textarea
             name="commentText"
             placeholder="Add your comment..."
             value={commentText}
-            className="form-input w-100"
-            style={{ lineHeight: '1.5' }}
+            className="form-input w-full p-2"
+            style={{
+              lineHeight: '1.5',
+              borderRadius: '10px',
+              border: '1px solid #3d9a40',
+              backgroundColor: 'rgba(255, 255, 255, 0.9)',
+            }}
             onChange={handleChange}
           />
-        </div>
-
-        <div className="col-12 col-lg-3">
-          <button className="btn btn-primary btn-block py-3" type="submit">
+          <button
+            className="btn btn-primary py-2"
+            style={{
+              backgroundColor: '#2c3e50',
+              color: 'white',
+              border: '1px solid #3d9a40',
+              borderRadius: '5px',
+              fontWeight: 'bold',
+              transition: 'background-color 0.3s',
+            }}
+            type="submit"
+            onMouseOver={(e) =>
+              (e.currentTarget.style.backgroundColor = '#34495e')
+            }
+            onMouseOut={(e) =>
+              (e.currentTarget.style.backgroundColor = '#2c3e50')
+            }
+          >
             Add Comment
           </button>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
   );
 };
