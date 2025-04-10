@@ -1,5 +1,5 @@
 import typeDefs from './typeDefs.js';
-import resolvers from './resolvers.js';
+import resolvers from './resolver.js';
 
 const mergedResolvers = {
     Query: {

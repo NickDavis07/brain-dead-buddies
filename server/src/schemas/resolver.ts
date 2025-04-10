@@ -1,6 +1,7 @@
 import { SurvivalTip, User, TipOfTheDay, Post, Category } from '../models/index.js';
 import { signToken, AuthenticationError } from '../utils/auth.js';
 import ChecklistItem from '../models/SurvivalChecklist.js';
+import Thought from '../models/index.js';
 
 // Define types for the arguments
 interface AddUserArgs {
@@ -172,6 +173,12 @@ const resolvers = {
                     ]
                 });
             return category?.posts || [];
+        },
+        thoughts: async () => {
+            return await Thought.find().sort({ createdAt: -1 });
+        },
+        thought: async (_parent: any, { thoughtId }: { thoughtId: string }) => {
+            return await Thought.findOne({ _id: thoughtId });
         },
     },
     Mutation: {
@@ -398,6 +405,12 @@ const resolvers = {
             return Post.findById(postId)
                 .populate('user')
                 .populate('categories');
+        },
+        addThought: async (_parent: any, { thoughtText, thoughtAuthor }: { thoughtText: string; thoughtAuthor: string }) => {
+            return await Thought.create({ thoughtText, thoughtAuthor });
+        },
+        removeThought: async (_parent: any, { thoughtId }: { thoughtId: string }) => {
+            return await Thought.findOneAndDelete({ _id: thoughtId });
         },
     },
 };
