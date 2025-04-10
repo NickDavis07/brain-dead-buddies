@@ -126,3 +126,30 @@ export const TIP_OF_THE_DAY = gql`
     }
   }
 `;
+
+export const Query = gql`
+  query Query {
+  fetchAllPosts {
+    title
+    bodyText
+  }
+}
+`;
+
+export const GET_POSTS = gql`
+  query GetPosts {
+    posts {
+      title
+      bodyText
+    }
+  }
+`;
+
+export const ADD_POST = gql`
+  mutation AddPost($title: String!, $bodyText: String!) {
+    addPost(title: $title, bodyText: $bodyText) {
+      title
+      bodyText
+    }
+  }
+`;
