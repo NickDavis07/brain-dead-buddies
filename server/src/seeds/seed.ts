@@ -1,13 +1,20 @@
 import db from '../config/connection.js';
+import Thought from '../models/index.js';
 import { SurvivalTip, User } from '../models/index.js';
 import cleanDB from './cleanDB.js';
 import userData from './userData.json' with { type: 'json' };
 import survivalTipData from './survivalTipData.json' with { type: 'json' };
 
+// test purpose for blog page
+import thoughtData from './thougthSeeds.json' with { type: 'json' };
+
 const seedDatabase = async (): Promise<void> => {
   try {
     await db();
     await cleanDB();
+
+    await Thought.insertMany(thoughtData);
+    console.log('Thoughts seeded successfully!');
 
     // Insert users only if they don't already exist
     for (const user of userData) {

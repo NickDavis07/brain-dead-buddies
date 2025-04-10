@@ -26,11 +26,18 @@ const typeDefs = `
     date: String
   }
 
+  type Thought {
+    _id: ID
+    thoughtText: String
+    thoughtAuthor: String
+    createdAt: String
+    comments: [Comment]!
+  }
+
   type Comment {
     _id: ID
     commentText: String
     createdAt: String
-    author: User
   }
 
   type ChecklistItem {
@@ -87,6 +94,8 @@ const typeDefs = `
   }
 
   type Query {
+    thoughts: [Thought]!
+    thought(thoughtId: ID!): Thought
     categories: [Category]!
     category(categoryId: ID!): Category
     posts: [Post]!
@@ -109,14 +118,16 @@ const typeDefs = `
   }
 
   type Mutation {
+  addThought(thoughtText: String!, thoughtAuthor: String!): Thought
+    addComment(thoughtId: ID!, commentText: String!): Thought
+    removeThought(thoughtId: ID!): Thought
+    removeComment(thoughtId: ID!, commentId: ID!): Thought
     addCategory(input: CategoryInput!): Category
     addPost(input: PostInput!): Post
     addUser(input: UserInput!): Auth
     login(email: String!, password: String!): Auth
     addSurvivalTip(input: SurvivalTipInput!): SurvivalTip
-    addComment(survivalTipId: ID!, commentText: String!): SurvivalTip
     removeSurvivalTip(survivalTipId: ID!): SurvivalTip
-    removeComment(survivalTipId: ID!, commentId: ID!): SurvivalTip
     addChecklistItem(text: String!, priority: String!): ChecklistItem
     updateChecklistPriority(id: ID!, priority: String!): ChecklistItem
     toggleChecklistItem(id: ID!, completed: Boolean!): ChecklistItem
