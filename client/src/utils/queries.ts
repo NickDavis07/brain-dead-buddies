@@ -136,20 +136,4 @@ export const Query = gql`
 }
 `;
 
-export const GET_POSTS = gql`
-  query GetPosts {
-    posts {
-      title
-      bodyText
-    }
-  }
-`;
 
-export const ADD_POST = gql`
-  mutation AddPost($title: String!, $bodyText: String!) {
-    addPost(title: $title, bodyText: $bodyText) {
-      title
-      bodyText
-    }
-  }
-`;

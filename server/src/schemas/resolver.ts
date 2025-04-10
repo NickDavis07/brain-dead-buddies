@@ -216,7 +216,7 @@ const resolvers = {
             }
             throw new AuthenticationError('You need to be logged in!');
         },
-        addComment: async (_parent: any, { survivalTipId, commentText }: AddCommentArgs, context: any) => {
+        addSurvivalTipComment: async (_parent: any, { survivalTipId, commentText }: AddCommentArgs, context: any) => {
             if (context.user) {
                 return SurvivalTip.findOneAndUpdate(
                     { _id: survivalTipId },
@@ -253,7 +253,7 @@ const resolvers = {
             }
             throw new AuthenticationError('You need to be logged in!');
         },
-        removeComment: async (_parent: any, { survivalTipId, commentId }: RemoveCommentArgs, context: any) => {
+        removeSurvivalTipComment: async (_parent: any, { survivalTipId, commentId }: RemoveCommentArgs, context: any) => {
             if (context.user) {
                 return SurvivalTip.findOneAndUpdate(
                     { _id: survivalTipId },
@@ -406,12 +406,31 @@ const resolvers = {
                 .populate('user')
                 .populate('categories');
         },
-        addZombieBlog: async (_parent: any, { zombieblogText, zombieblogAuthor }: { zombieblogText: string; zombieblogAuthor: string }) => {
-            return await ZombieBlog.create({ zombieblogText, zombieblogAuthor });
-        },
-        removeZombieBlog: async (_parent: any, { zombieblogId }: { zombieblogId: string }) => {
-            return await ZombieBlog.findOneAndDelete({ _id: zombieblogId });
-        },
+            addThought: async (_parent: unknown, { thoughtText, thoughtAuthor }: { thoughtText: string; thoughtAuthor: string }) => {
+              return await Thought.create({ thoughtText, thoughtAuthor });
+            },
+            addComment: async (_parent: unknown, { thoughtId, commentText }: { thoughtId: string; commentText: string }) => {
+              return await Thought.findOneAndUpdate(
+                { _id: thoughtId },
+                {
+                  $addToSet: { comments: { commentText } },
+                },
+                {
+                  new: true,
+                  runValidators: true,
+                }
+              );
+            },
+            removeThought: async (_parent: unknown, { thoughtId }: { thoughtId: string }) => {
+              return await Thought.findOneAndDelete({ _id: thoughtId });
+            },
+            removeComment: async (_parent: unknown, { thoughtId, commentId }: { thoughtId: string; commentId: string }) => {
+              return await Thought.findOneAndUpdate(
+                { _id: thoughtId },
+                { $pull: { comments: { _id: commentId } } },
+                { new: true }
+              );
+            },
     },
 };
 

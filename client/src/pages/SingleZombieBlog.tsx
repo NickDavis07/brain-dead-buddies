@@ -1,19 +1,36 @@
+// Import the `useParams()` hook from React Router
 import { useParams } from 'react-router-dom';
+import { FC } from 'react';
 import { useQuery } from '@apollo/client';
 
-import CommentList from '../components/CommentList.tsx';
-import CommentForm from '../components/CommentForm.tsx';
+import CommentList from '../components/CommentList/index.tsx';
+import CommentForm from '../components/CommentForm/index.tsx';
 
 import { QUERY_SINGLE_ZOMBIEBLOG } from '../utils/queries.ts';
+import { QUERY_SINGLE_THOUGHT } from '../utils/queries.ts';
+interface Thought {
+  _id: string;
+  createdAt: string;
+  thoughtText: string;
+  thoughtAuthor: string;
+  comments: Array<{ _id: string; commentText: string; createdAt: string; username: string }>;
+}
 
 const SingleZombieBlog = () => {
   const { zombieblogId } = useParams();
+const SingleThought: FC = () => {
+  // Use `useParams()` to retrieve value of the route parameter `:profileId`
+  const { thoughtId } = useParams();
 
   const { loading, data } = useQuery(QUERY_SINGLE_ZOMBIEBLOG, {
     variables: { zombieblogId: zombieblogId },
+  const { loading, data } = useQuery(QUERY_SINGLE_THOUGHT, {
+    // Pass the `thoughtId` URL parameter into query to retrieve this thought's data
+    variables: { thoughtId: thoughtId },
   });
 
   const zombieblog = data?.zombieblog || {};
+  const thought: Thought = data?.thought || ({} as Thought);
 
   if (loading) {
     return <div>Loading...</div>;
