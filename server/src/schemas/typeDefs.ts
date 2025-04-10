@@ -4,7 +4,7 @@ const typeDefs = `
     username: String
     email: String
     password: String
-    survivalTips: [SurvivalTip]!
+    survivalTips: [SurvivalTip]
     dateJoined: String
     role: String
   }

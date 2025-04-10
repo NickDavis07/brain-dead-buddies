@@ -88,11 +88,11 @@ interface AssignCategoryArgs {
 
 const resolvers = {
     Query: {
-        users: async () => {
-            return User.find().populate('survivalTip');
+        users: async (_parent: any, _args: any, _context: any) => {
+            return User.find().populate('survivalTips');
         },
         user: async (_parent: any, { username }: UserArgs) => {
-            return User.findOne({ username }).populate('survivalTip');
+            return User.findOne({ username }).populate('survivalTips');
         },
         survivalTips: async () => {
             return await SurvivalTip.find().sort({ createdAt: -1 });
@@ -107,7 +107,7 @@ const resolvers = {
         me: async (_parent: any, _args: any, context: any) => {
             // If the user is authenticated, find and return the user's information along with their survivalTip
             if (context.user) {
-                return User.findOne({ _id: context.user._id }).populate('survivalTip');
+                return User.findOne({ _id: context.user._id }).populate('survivalTips');
             }
             // If the user is not authenticated, throw an AuthenticationError
             throw new AuthenticationError('Could not authenticate user.');
