@@ -8,10 +8,12 @@ const CommentForm = ({ zombieblogId }: any) => {
   const [characterCount, setCharacterCount] = useState(0);
 
   // The useMutation hook returns an array, which includes our addComment function
+  
   const [addComment, { error }] = useMutation(ADD_COMMENT);
 
   const handleFormSubmit = async (event: FormEvent) => {
-    event.preventDefault();
+    event.preventDefault()
+    console.log('zombieblogId', zombieblogId);
 
     try {
       // We call the addComment function when the comment form submits, and give the variables argument needed to complete the query
