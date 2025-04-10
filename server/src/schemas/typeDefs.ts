@@ -139,6 +139,8 @@ const typeDefs = `
     modifyCategory(categoryId: ID!, name: String!): Category
     assignCategoryToPost(postId: ID!, categoryId: ID!): Post
     unassignCategoryFromPost(postId: ID!, categoryId: ID!): Post
+    addSurvivalTipComment(survivalTipId: ID!, commentText: String!): SurvivalTip
+    removeSurvivalTipComment(survivalTipId: ID!, commentId: ID!): SurvivalTip
   }
 `;
 
