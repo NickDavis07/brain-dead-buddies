@@ -30,7 +30,7 @@ const ZombieBlogList: React.FC<ZombieBlogListProps> = ({ zombieblogs, title }) =
             {zombieblog.zombieblogAuthor}
             <br />
             <span className="text-sm text-gray-400">
-              had this zombieblog on {new Date(zombieblog.createdAt).toLocaleString()}
+              had this zombieblog on {new Date(Number(zombieblog.createdAt)).toLocaleString()}
             </span>
           </h4>
           <div className="mb-2">
@@ -40,7 +40,7 @@ const ZombieBlogList: React.FC<ZombieBlogListProps> = ({ zombieblogs, title }) =
             className="block text-center bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
             to={`/zombieblogs/${zombieblog._id}`}
           >
-            Dive into the conversation about this zombieblog.
+            Add a comment
           </Link>
         </div>
       ))}
