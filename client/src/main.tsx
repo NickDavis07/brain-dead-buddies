@@ -10,7 +10,6 @@ import Blog from './pages/Blog';
 import ErrorPage from './pages/Error';
 import SurvivalChecklist from './pages/SurvivalChecklist';
 import SingleZombieBlog from './pages/SingleZombieBlog.tsx';
-import CreateBlogPost from './pages/CreateBlogPost.js';
 
 const router = createBrowserRouter([
   {
@@ -42,10 +41,7 @@ const router = createBrowserRouter([
       }, {
         path: '/zombieblogs/:zombieblogId',
         element: <SingleZombieBlog />
-      }, {
-        path: '/blog/new',
-        element: <CreateBlogPost />
-      }
+      },
     ]
   },
 ]);

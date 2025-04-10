@@ -1,6 +1,5 @@
 // Import the `useParams()` hook from React Router
 import { useParams } from 'react-router-dom';
-import { FC } from 'react';
 import { useQuery } from '@apollo/client';
 
 import CommentList from '../components/CommentList/index.tsx';
