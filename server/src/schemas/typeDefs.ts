@@ -38,6 +38,8 @@ const typeDefs = `
     _id: ID
     commentText: String
     createdAt: String
+    commentAuthor: String
+
   }
 
   type ChecklistItem {
