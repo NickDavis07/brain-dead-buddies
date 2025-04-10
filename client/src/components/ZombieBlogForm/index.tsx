@@ -66,7 +66,7 @@ const ZombieBlogForm = () => {
         <div className="col-12">
           <textarea
             name="zombieblogText"
-            placeholder="Here's a new zombieblog..."
+            placeholder="Pen down your undead musings here..."
             value={formState.zombieblogText}
             className="form-input w-100"
             onChange={handleChange}
@@ -75,7 +75,7 @@ const ZombieBlogForm = () => {
         <div className="col-12 col-lg-9">
           <input
             name="zombieblogAuthor"
-            placeholder="Add your name to get credit for the zombieblog..."
+            placeholder="Share your name to claim this zombie blog as yours..."
             value={formState.zombieblogAuthor}
             className="form-input w-100"
             onChange={handleChange}
@@ -83,7 +83,7 @@ const ZombieBlogForm = () => {
         </div>
         <div className="col-12 col-lg-3">
           <button className="btn btn-primary btn-block py-3" type="submit">
-            Add ZombieBlog
+            Add New Post
           </button>
         </div>
         {error && (

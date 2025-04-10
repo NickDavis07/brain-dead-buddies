@@ -32,7 +32,7 @@ const Home = () => {
                 '2px 2px 0px black, -2px -2px 0px black, 2px -2px 0px black, -2px 2px 0px black',
             }}
           >
-            Blog
+            Zombie Blog
           </h1>
         </div>
 
@@ -53,7 +53,7 @@ const Home = () => {
             ) : (
               <ZombieBlogList
                 zombieblogs={zombieblogs}
-                title="Some Feed for ZombieBlog(s)..."
+                title="Unleash Your Ideas in the Zombie Blog Feed!"
               />
             )}
           </div>

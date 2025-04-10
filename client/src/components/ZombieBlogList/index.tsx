@@ -15,7 +15,7 @@ interface ZombieBlogListProps {
 
 const ZombieBlogList: React.FC<ZombieBlogListProps> = ({ zombieblogs, title }) => {
   if (!zombieblogs.length) {
-    return <h3 className="text-center text-red-600 font-bold">No ZombieBlogs Yet</h3>;
+    return <h3 className="text-center text-red-600 font-bold">No Zombie Blogs Yet</h3>;
   }
 
   return (
@@ -40,7 +40,7 @@ const ZombieBlogList: React.FC<ZombieBlogListProps> = ({ zombieblogs, title }) =
             className="block text-center bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
             to={`/zombieblogs/${zombieblog._id}`}
           >
-            Join the discussion on this zombieblog.
+            Dive into the conversation about this zombieblog.
           </Link>
         </div>
       ))}
